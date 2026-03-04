@@ -1,4 +1,4 @@
-package com.roomflow.roomflow;
+package com.roomflow;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
