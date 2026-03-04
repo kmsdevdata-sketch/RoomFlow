@@ -1,4 +1,4 @@
-package com.roomflow;
+package com.roomflow.domain;
 
 public enum Status {
     RESERVATION("예약"),

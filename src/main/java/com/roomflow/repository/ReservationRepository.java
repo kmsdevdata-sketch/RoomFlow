@@ -1,5 +1,6 @@
-package com.roomflow;
+package com.roomflow.repository;
 
+import com.roomflow.domain.Reservation;
 import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;
