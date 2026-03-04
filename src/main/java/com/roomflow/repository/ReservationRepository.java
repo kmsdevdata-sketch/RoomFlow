@@ -2,15 +2,17 @@ package com.roomflow.repository;
 
 import com.roomflow.domain.Reservation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@RequiredArgsConstructor
+@Repository
 public class ReservationRepository {
 
-    private final Map<Long, Reservation> store;
+    private final Map<Long, Reservation> store = new HashMap<>();
     private Long sequence = 0L;
 
     public void save(Reservation reservation) {

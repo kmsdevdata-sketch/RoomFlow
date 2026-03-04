@@ -14,4 +14,14 @@ public class User {
     private String phoneNumber;
     private String email;
     private Role role;
+
+    public User(String loginId, String password, String name, LocalDate birthDate, String phoneNumber, String email, Role role) {
+        this.loginId = loginId;
+        this.password = password;
+        this.name = name;
+        this.birthDate = birthDate;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.role = role;
+    }
 }
