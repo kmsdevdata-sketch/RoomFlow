@@ -1,9 +1,12 @@
 package com.roomflow;
 
+import lombok.Data;
+
 import java.time.LocalTime;
 
+@Data
 public class Room {
-    private Long roomId;
+    private Long id;
     private String name;
     private int capacity; // 이용가능 인원 (2~4명이라고 가정시 4??)
     private LocalTime openTime;

@@ -4,7 +4,7 @@ import lombok.Data;
 
 import java.time.LocalDate;
 
-@Data
+@Data // @Data사용하면 설계상 안좋다고 하지만 직접체감하지 못해봐서 그냥 사용해보기
 public class User {
     private Long id;
     private String loginId;
