@@ -5,12 +5,14 @@ import com.roomflow.domain.User;
 import com.roomflow.repository.UserRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+@Slf4j
 @Controller
 @RequestMapping("/auth")
 @RequiredArgsConstructor
@@ -33,6 +35,7 @@ public class AuthController {
         // 만드는 와중에 아직 필요없지 않을까 싶어서 그냥 보류
         user.setRole(Role.USER);
         userRepository.save(user);
+        log.info("save user={}",user);
         return "redirect:/";
     }
 }
