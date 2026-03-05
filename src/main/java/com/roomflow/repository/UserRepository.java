@@ -2,13 +2,12 @@ package com.roomflow.repository;
 
 import com.roomflow.domain.User;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
+@Slf4j
 @Repository
 public class UserRepository {
     private final Map<Long, User> store = new HashMap<>();
@@ -21,6 +20,7 @@ public class UserRepository {
     public User save(User user) {
         user.setId(++sequence);
         store.put(user.getId(), user);
+        log.info("save user={}",user);
         return user;
     }
 
@@ -38,4 +38,12 @@ public class UserRepository {
     public void clearStore() {
         store.clear();
     }
+
+    public Optional<User> findByLoginId(String loginId) {
+        return  findAll().stream()
+                    .filter(u -> u.getLoginId().equals(loginId))
+                    .findFirst();
+
+    }
+
 }

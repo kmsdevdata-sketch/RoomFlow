@@ -35,7 +35,6 @@ public class AuthController {
         // 만드는 와중에 아직 필요없지 않을까 싶어서 그냥 보류
         user.setRole(Role.USER);
         userRepository.save(user);
-        log.info("save user={}",user);
         return "redirect:/";
     }
 }
