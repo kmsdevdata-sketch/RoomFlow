@@ -23,7 +23,7 @@ class UserRepositoryTest {
     @Test
     void save() {
         // given
-        User user = new User("123", "123", "kim", LocalDate.now(), "01012345678", "email.com", Role.USER);
+        User user = new User("123", "123", "kim", LocalDate.now(), "01012345678", "email.com");
         // when
         User savedUser = userRepository.save(user);
         // then
@@ -34,7 +34,7 @@ class UserRepositoryTest {
     @Test
     void findById() {
         //given
-        User user = new User("123", "123", "kim", LocalDate.now(), "01012345678", "email.com", Role.USER);
+        User user = new User("123", "123", "kim", LocalDate.now(), "01012345678", "email.com");
         //when
         User savedUser = userRepository.save(user);
         User findUser = userRepository.findById(savedUser.getId());
@@ -45,8 +45,8 @@ class UserRepositoryTest {
     @Test
     void findAll() {
         //given
-        User user1 = new User("123", "123", "kim", LocalDate.now(), "01012345678", "email.com", Role.USER);
-        User user2 = new User("123", "123", "kim", LocalDate.now(), "01012345678", "email.com", Role.USER);
+        User user1 = new User("123", "123", "kim", LocalDate.now(), "01012345678", "email.com");
+        User user2 = new User("123", "123", "kim", LocalDate.now(), "01012345678", "email.com");
 
         userRepository.save(user1);
         userRepository.save(user2);
