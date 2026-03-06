@@ -71,4 +71,18 @@ public class AuthController {
         log.info("cookie추가");
         return "redirect:/";
     }
+
+    @PostMapping("/logout")
+    public String logout(HttpServletResponse response) {
+        expireCookie(response, "userId");
+        log.info("logout");
+        return "redirect:/";
+    }
+
+    private static void expireCookie(HttpServletResponse response, String cookieName) {
+        Cookie cookie = new Cookie(cookieName,null);
+        cookie.setMaxAge(0);
+        cookie.setPath("/");
+        response.addCookie(cookie);
+    }
 }
