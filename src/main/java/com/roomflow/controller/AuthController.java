@@ -5,6 +5,8 @@ import com.roomflow.domain.Role;
 import com.roomflow.domain.User;
 import com.roomflow.repository.UserRepository;
 import com.roomflow.service.LoginService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -47,7 +49,9 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public String login(@Valid LoginForm loginForm, BindingResult bindingResult) {
+    public String login(@Valid LoginForm loginForm,
+                        BindingResult bindingResult,
+                        HttpServletResponse httpServletResponse) {
         if (bindingResult.hasErrors()) {
             return "auth/login";
         }
@@ -59,6 +63,12 @@ public class AuthController {
         }
 
         // 로그인 성공하면
+
+        Cookie idCookie = new Cookie("userId", String.valueOf(loginUser.getId()));
+        // 쿠키는 요청경로의 디렉토리 부분에 담기기 때문에 별도로(루트에 담는등)설정이 필요할수있음
+        idCookie.setPath("/");
+        httpServletResponse.addCookie(idCookie);
+        log.info("cookie추가");
         return "redirect:/";
     }
 }
