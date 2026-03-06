@@ -1,8 +1,10 @@
 package com.roomflow.controller;
 
+import com.roomflow.domain.LoginForm;
 import com.roomflow.domain.Role;
 import com.roomflow.domain.User;
 import com.roomflow.repository.UserRepository;
+import com.roomflow.service.LoginService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 public class AuthController {
 
+    private final LoginService loginService;
     private final UserRepository userRepository;
 
     @GetMapping("/signup")
@@ -35,6 +38,27 @@ public class AuthController {
         // 만드는 와중에 아직 필요없지 않을까 싶어서 그냥 보류
         user.setRole(Role.USER);
         userRepository.save(user);
+        return "redirect:/";
+    }
+
+    @GetMapping("/login")
+    public String loginForm(LoginForm loginForm) {
+        return "auth/login";
+    }
+
+    @PostMapping("/login")
+    public String login(@Valid LoginForm loginForm, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "auth/login";
+        }
+
+        User loginUser = loginService.login(loginForm.getLoginId(), loginForm.getPassword());
+        if (loginUser == null) {
+            bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다.");
+            return "auth/login";
+        }
+
+        // 로그인 성공하면
         return "redirect:/";
     }
 }
