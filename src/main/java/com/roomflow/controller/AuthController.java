@@ -5,7 +5,9 @@ import com.roomflow.domain.Role;
 import com.roomflow.domain.User;
 import com.roomflow.repository.UserRepository;
 import com.roomflow.service.LoginService;
+import com.roomflow.session.SessionMng;
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +26,7 @@ public class AuthController {
 
     private final LoginService loginService;
     private final UserRepository userRepository;
+    private final SessionMng sessionMng;
 
     @GetMapping("/signup")
     // User 넣어주는 이유는 ModelAttribute로 사용하여 타임리프 페이지에서 폼에 바인딩을 위해
@@ -51,7 +54,7 @@ public class AuthController {
     @PostMapping("/login")
     public String login(@Valid LoginForm loginForm,
                         BindingResult bindingResult,
-                        HttpServletResponse httpServletResponse) {
+                        HttpServletResponse response) {
         if (bindingResult.hasErrors()) {
             return "auth/login";
         }
@@ -64,17 +67,14 @@ public class AuthController {
 
         // 로그인 성공하면
 
-        Cookie idCookie = new Cookie("userId", String.valueOf(loginUser.getId()));
-        // 쿠키는 요청경로의 디렉토리 부분에 담기기 때문에 별도로(루트에 담는등)설정이 필요할수있음
-        idCookie.setPath("/");
-        httpServletResponse.addCookie(idCookie);
-        log.info("cookie추가");
+        //세션 관리자로 세션생성
+        sessionMng.createSession(loginUser,response);
         return "redirect:/";
     }
 
     @PostMapping("/logout")
-    public String logout(HttpServletResponse response) {
-        expireCookie(response, "userId");
+    public String logout(HttpServletRequest request) {
+        sessionMng.expire(request);
         log.info("logout");
         return "redirect:/";
     }

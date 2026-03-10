@@ -2,6 +2,8 @@ package com.roomflow.controller;
 
 import com.roomflow.domain.User;
 import com.roomflow.repository.UserRepository;
+import com.roomflow.session.SessionMng;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class HomeController {
 
     private final UserRepository userRepository;
+    private final SessionMng sessionMng;
 
 //    @GetMapping("/")
     public String home() {
@@ -22,22 +25,14 @@ public class HomeController {
     }
 
     @GetMapping("/")
-    public String homeLogin(@CookieValue(name = "userId", required = false) Long userId, Model model) {
+    public String homeLogin(HttpServletRequest request, Model model) {
 
-        // 여기 아이디 검사는 쿠키가 없는 ( = 로그인을 안한) 사용자 거르기
-        if (userId == null) {
-            log.info("쿠키 미확인");
-            return "home/home";
-        }
-        // 여기는 아이디를 입력했지만 (쿠키를 받았지만) 존재하지 않는 회원일떄
-        User loginUser = userRepository.findById(userId);
+        // 우선은 다운캐스팅 사용 제너릭변경 필요
+        User loginUser = (User) sessionMng.getLoginUser(request);
         if (loginUser == null) {
-            log.info("쿠키확인 & 아이디 미확인");
             return "home/home";
         }
-
         model.addAttribute("user", loginUser);
-        log.info("쿠키확인 & 아이디 확인");
         return "home/loginHome";
     }
 }
