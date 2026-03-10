@@ -13,7 +13,7 @@ Spring MVC 패턴과 비즈니스 로직 설계를 학습하기 위해 제작했
 - [x] 로그아웃
 - [x] 사용자 Role 구분 (USER/ADMIN)
 - [ ] 비밀번호 암호화
-- [ ] Session 기반 인증
+- [x] Session 기반 인증
 
 ### 스터디룸 관리 (관리자)
 - [x] Room 도메인 설계

@@ -1,5 +1,6 @@
 package com.roomflow.controller;
 
+import com.roomflow.SessionConst;
 import com.roomflow.domain.LoginForm;
 import com.roomflow.domain.Role;
 import com.roomflow.domain.User;
@@ -9,6 +10,7 @@ import com.roomflow.session.SessionMng;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +31,6 @@ public class AuthController {
     private final SessionMng sessionMng;
 
     @GetMapping("/signup")
-    // User 넣어주는 이유는 ModelAttribute로 사용하여 타임리프 페이지에서 폼에 바인딩을 위해
     public String signup(User user) {
         return "auth/signup";
     }
@@ -39,8 +40,7 @@ public class AuthController {
         if (bindingResult.hasErrors()) {
             return "auth/signup";
         }
-        // 기존에 service를 만들지 않았지만 여기서 User생성시에 Role설정을 해줘야해서 service만들어봄
-        // 만드는 와중에 아직 필요없지 않을까 싶어서 그냥 보류
+        // TODO UserService필요
         user.setRole(Role.USER);
         userRepository.save(user);
         return "redirect:/";
@@ -54,7 +54,7 @@ public class AuthController {
     @PostMapping("/login")
     public String login(@Valid LoginForm loginForm,
                         BindingResult bindingResult,
-                        HttpServletResponse response) {
+                        HttpServletRequest request) {
         if (bindingResult.hasErrors()) {
             return "auth/login";
         }
@@ -65,24 +65,31 @@ public class AuthController {
             return "auth/login";
         }
 
-        // 로그인 성공하면
-
-        //세션 관리자로 세션생성
-        sessionMng.createSession(loginUser,response);
+        //로그인 성공 처리
+        //세션이 있으면 있는 세션 반환 , 없으면 신규 세션 생성
+        HttpSession session = request.getSession();
+        //세션에 로그인 회원 정보 보관
+        session.setAttribute(SessionConst.LOGIN_USER, loginUser);
+        // TODO 로그인 관련 간단한정보만 fit하게 넣게 수정필요
+        /*
+        1.HttpSession 생성
+        2.sessionId생성
+        3.서버 세션 저장소에 세션생성
+        4.클라이언트에게 sessionId쿠키 발급
+        5.세션에 attribute(key,value)저장
+        6.이후 요청에서 sessionId로 세션조회
+         */
         return "redirect:/";
     }
 
     @PostMapping("/logout")
     public String logout(HttpServletRequest request) {
-        sessionMng.expire(request);
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
         log.info("logout");
         return "redirect:/";
     }
 
-    private static void expireCookie(HttpServletResponse response, String cookieName) {
-        Cookie cookie = new Cookie(cookieName,null);
-        cookie.setMaxAge(0);
-        cookie.setPath("/");
-        response.addCookie(cookie);
-    }
 }
