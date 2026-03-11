@@ -15,9 +15,10 @@ public class ReservationRepository {
     private final Map<Long, Reservation> store = new HashMap<>();
     private Long sequence = 0L;
 
-    public void save(Reservation reservation) {
+    public Reservation save(Reservation reservation) {
         reservation.setId(++sequence);
-        store.put(reservation.getId(), reservation);
+        Reservation saveReservation = store.put(reservation.getId(), reservation);
+        return saveReservation;
     }
 
     public Reservation findById(Long id) {

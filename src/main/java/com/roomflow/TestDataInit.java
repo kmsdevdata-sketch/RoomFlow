@@ -1,38 +1,52 @@
 package com.roomflow;
 
 import com.roomflow.domain.Role;
+import com.roomflow.domain.Room;
 import com.roomflow.domain.User;
+import com.roomflow.repository.RoomRepository;
 import com.roomflow.repository.UserRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class TestDataInit {
 
     private final UserRepository userRepository;
+    private final RoomRepository roomRepository;
 
     @PostConstruct
     public void init() {
-        User user1 = new User("abc1", "abcd", "kim", LocalDate.now(), "01012345678", "email1.com");
-        user1.setRole(Role.USER);
-        User user2 = new User("abc2", "efgh", "lee", LocalDate.now(), "01023456789", "email2.com");
-        user2.setRole(Role.USER);
-        User user3 = new User("abc3", "ijkl", "park", LocalDate.now(), "01034567891", "email3.com");
-        user3.setRole(Role.USER);
-        User user4 = new User("abc4", "mnop", "choi", LocalDate.now(), "01045678912", "email4.com");
-        user4.setRole(Role.USER);
-        User user5 = new User("abc5", "qrst", "kang", LocalDate.now(), "01056789123", "email5.com");
-        user5.setRole(Role.USER);
 
-        userRepository.save(user1);
-        userRepository.save(user2);
-        userRepository.save(user3);
-        userRepository.save(user4);
-        userRepository.save(user5);
+        userRepository.save(new User("abc1","abcd","kim",LocalDate.now(),"01012345678","email1.com"));
+        userRepository.save(new User("abc2","efgh","lee",LocalDate.now(),"01023456789","email2.com"));
 
+        roomRepository.save(new Room(null,"스터디룸 A",4,
+                LocalTime.of(9,0),
+                LocalTime.of(23,0),
+                true));
+
+        roomRepository.save(new Room(null,"스터디룸 B",6,
+                LocalTime.of(9,0),
+                LocalTime.of(23,0),
+                true));
+
+        roomRepository.save(new Room(null,"회의실 C",8,
+                LocalTime.of(10,0),
+                LocalTime.of(22,0),
+                true));
+
+        roomRepository.save(new Room(null,"프라이빗룸 D",2,
+                LocalTime.of(9,0),
+                LocalTime.of(23,0),
+                true));
+
+        log.info("init successes");
     }
 }

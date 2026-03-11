@@ -1,0 +1,92 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="../../static/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        .room-card{
+            transition: transform 0.15s;
+        }
+        .room-card:hover{
+            transform: translateY(-5px);
+        }
+        .room-img{
+            height:180px;
+            object-fit:cover;
+        }
+    </style>
+
+</head>
+
+<body>
+
+<div class="container py-5">
+
+    <div class="text-center mb-5">
+        <h2>스터디룸 목록</h2>
+    </div>
+
+    <div class="row g-4">
+
+        <div class="col-md-4"
+             th:each="room : ${rooms}">
+
+            <div class="card room-card shadow-sm">
+
+                <!-- 이미지 -->
+                <img class="card-img-top room-img"
+                     src="https://images.unsplash.com/photo-1524758631624-e2822e304c36"
+                     alt="room">
+
+                <div class="card-body">
+
+                    <!-- 방 이름 -->
+                    <h5 class="card-title"
+                        th:text="${room.name}">
+                        Room Name
+                    </h5>
+
+                    <!-- 간단 설명 -->
+                    <p class="card-text">
+                        수용 인원 :
+                        <span th:text="${room.capacity}">4</span>명
+                        <br>
+
+                        운영시간 :
+                        <span th:text="${room.openTime}">09:00</span>
+                        ~
+                        <span th:text="${room.closeTime}">23:00</span>
+                    </p>
+
+                </div>
+
+                <!-- 버튼 영역 -->
+                <div class="card-footer d-flex justify-content-between">
+
+                    <!-- 방 상세 -->
+                    <a class="btn btn-outline-secondary btn-sm"
+                       th:href="@{/rooms/{id}(id=${room.id})}">
+                        방 상세
+                    </a>
+
+                    <!-- 예약하기 -->
+                    <a class="btn btn-primary btn-sm"
+                       th:href="@{/rooms/{id}/reserve(id=${room.id})}">
+                        예약하기
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

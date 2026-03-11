@@ -22,11 +22,6 @@ public class HomeController {
     private final UserRepository userRepository;
     private final SessionMng sessionMng;
 
-//    @GetMapping("/")
-    public String home() {
-        return "home/home.html";
-    }
-
     @GetMapping("/")
     public String homeLogin(
             @SessionAttribute(name = SessionConst.LOGIN_USER,required = false) User loginUser

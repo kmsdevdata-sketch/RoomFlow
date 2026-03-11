@@ -13,4 +13,12 @@ public class Room {
     private LocalTime closeTime;
     private boolean isAvailable;
 
+    public Room(Long id, String name, int capacity, LocalTime openTime, LocalTime closeTime, boolean isAvailable) {
+        this.id = id;
+        this.name = name;
+        this.capacity = capacity;
+        this.openTime = openTime;
+        this.closeTime = closeTime;
+        this.isAvailable = isAvailable;
+    }
 }

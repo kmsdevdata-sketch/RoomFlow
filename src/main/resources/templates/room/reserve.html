@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+
+    <style>
+
+        .time-grid{
+        display:grid;
+        grid-template-columns:repeat(6,1fr);
+        gap:10px;
+        margin-top:20px;
+        }
+
+        .time-block{
+        border:1px solid #ccc;
+        padding:12px;
+        text-align:center;
+        border-radius:8px;
+        cursor:pointer;
+        }
+
+        .time-block.disabled{
+        background:#e0e0e0;
+        cursor:not-allowed;
+        }
+
+        .time-block.active{
+        background:#0d6efd;
+        color:white;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="container" style="max-width:800px">
+
+    <h2 th:text="${room.name}">Room</h2>
+
+    <form th:action="@{/reservations}" method="post">
+
+        <input type="hidden" name="roomId" th:value="${room.id}">
+
+        <hr>
+
+        <h4>날짜 선택</h4>
+
+        <input type="date"
+               name="date"
+               required
+               class="form-control">
+
+        <hr>
+
+        <h4>예약 시간 선택</h4>
+
+        <div class="time-grid">
+
+            <div th:each="i : ${#numbers.sequence(0,23)}"
+                 class="time-block"
+                 th:classappend="${i < room.openTime.hour or i >= room.closeTime.hour} ? 'disabled'"
+                 th:data-hour="${i}"
+                 onclick="selectBlock(this)">
+
+                <span th:text="|${i}:00 ~ ${i+1}:00|"></span>
+
+            </div>
+
+        </div>
+
+        <hr>
+
+        <h4>
+
+            StartTime :
+            <span id="startText">-</span>
+
+            &nbsp;&nbsp;
+
+            EndTime :
+            <span id="endText">-</span>
+
+        </h4>
+
+        <input type="hidden" name="startTime" id="startTime">
+        <input type="hidden" name="endTime" id="endTime">
+
+        <hr>
+
+        <button class="btn btn-primary w-100">
+            예약하기
+        </button>
+
+    </form>
+
+</div>
+
+<script>
+
+    let selected = []
+
+    function selectBlock(el){
+
+    if(el.classList.contains("disabled")) return
+
+    const hour = parseInt(el.dataset.hour)
+
+    if(selected.length === 0){
+
+    selected.push(hour)
+
+    }else{
+
+    const min = Math.min(...selected)
+    const max = Math.max(...selected)
+
+    if(hour === max + 1 || hour === min - 1){
+
+    selected.push(hour)
+
+    }else{
+
+    clearSelection()
+    selected.push(hour)
+
+    }
+
+    }
+
+    render()
+    updateTime()
+
+    }
+
+    function render(){
+
+    document.querySelectorAll(".time-block")
+    .forEach(b=>b.classList.remove("active"))
+
+    selected.forEach(hour=>{
+    document.querySelector(`[data-hour='${hour}']`)
+    .classList.add("active")
+    })
+
+    }
+
+    function clearSelection(){
+
+    selected=[]
+
+    }
+
+    function updateTime(){
+
+    if(selected.length===0) return
+
+    selected.sort((a,b)=>a-b)
+
+    const start = selected[0]
+    const end = selected[selected.length-1]+1
+
+    document.getElementById("startText").innerText = start + ":00"
+    document.getElementById("endText").innerText = end + ":00"
+
+    document.getElementById("startTime").value = start + ":00"
+    document.getElementById("endTime").value = end + ":00"
+
+    }
+
+</script>
+
+</body>
+</html>
