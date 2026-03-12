@@ -2,38 +2,99 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link th:href="@{/css/bootstrap.min.css}"
           href="../../static/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        .container {
-            max-width: 560px;
+        :root {
+            --primary-color: #4A90E2;
+            --secondary-color: #6C757D;
+            --bg-color: #F8FAFC;
+        }
+        body {
+            background-color: var(--bg-color);
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .hero-card {
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            padding: 3rem;
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
+        .brand-logo {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        .hero-subtitle {
+            color: var(--secondary-color);
+            margin-bottom: 2.5rem;
+            font-size: 1.1rem;
+        }
+        .btn-custom-primary {
+            background-color: var(--primary-color);
+            border: none;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .btn-custom-primary:hover {
+            background-color: #357ABD;
+            transform: translateY(-2px);
+            color: white;
+        }
+        .btn-custom-outline {
+            background-color: transparent;
+            border: 2px solid #E2E8F0;
+            color: var(--secondary-color);
+            padding: 0.8rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .btn-custom-outline:hover {
+            background-color: #F1F5F9;
+            border-color: #CBD5E1;
+            transform: translateY(-2px);
+        }
+        .divider {
+            height: 1px;
+            background-color: #E2E8F0;
+            margin: 2rem 0;
         }
     </style>
 </head>
 <body>
 
-<div class="container" style="max-width: 600px">
-    <div class="py-5 text-center">
-        <h2 >홈 화면</h2>
+<div class="hero-card">
+    <div class="brand-logo">Roomflow</div>
+    <p class="hero-subtitle">스마트하고 간편한 공간 예약 플랫폼</p>
+
+    <div class="d-grid gap-3">
+        <button class="btn btn-custom-primary btn-lg" type="button"
+                th:onclick="|location.href='@{/auth/login}'|">
+            시작하기 (로그인)
+        </button>
+        <button class="btn btn-custom-outline btn-lg" type="button"
+                th:onclick="|location.href='@{/auth/signup}'|">
+            신규 가입
+        </button>
     </div>
 
-    <div class="row">
-        <div class="col">
-            <button class="w-100 btn btn-secondary btn-lg" type="button"
-                    th:onclick="|location.href='@{/auth/signup}'|">
-                회원가입
-            </button>
-        </div>
-        <div class="col">
-            <button class="w-100 btn btn-secondary btn-lg" type="button"
-                    th:onclick="|location.href='@{/auth/login}'|">
-                로그인
-            </button>
-        </div>
-    </div>
+    <div class="divider"></div>
+    <p class="text-muted small">문의: support@roomflow.com</p>
+</div>
 
-    <hr class="my-4">
-
-</div> <!-- /container -->
 </body>
 </html>

@@ -2,90 +2,148 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link th:href="@{/css/bootstrap.min.css}"
           href="../../static/css/bootstrap.min.css" rel="stylesheet">
-
     <style>
-        .room-card{
-            transition: transform 0.15s;
+        :root {
+            --primary-color: #4A90E2;
         }
-        .room-card:hover{
-            transform: translateY(-5px);
+        body {
+            background-color: #F8FAFC;
+            font-family: 'Pretendard', sans-serif;
+            padding-bottom: 5rem;
         }
-        .room-img{
-            height:180px;
-            object-fit:cover;
+        .header-section {
+            background: white;
+            padding: 3rem 0;
+            margin-bottom: 3rem;
+            border-bottom: 1px solid #E2E8F0;
+            text-align: center;
+        }
+        .header-section h2 {
+            font-weight: 800;
+            color: #1E293B;
+        }
+        .room-card {
+            background: white;
+            border-radius: 20px;
+            border: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+            height: 100%;
+        }
+        .room-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+        }
+        .room-image-placeholder {
+            height: 180px;
+            background: linear-gradient(135deg, #E2E8F0 0%, #CBD5E1 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+        .room-body {
+            padding: 1.5rem;
+        }
+        .room-title {
+            font-weight: 800;
+            font-size: 1.25rem;
+            color: #1E293B;
+            margin-bottom: 0.75rem;
+        }
+        .room-info {
+            font-size: 0.9rem;
+            color: #64748B;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+        .room-info span {
+            margin-right: 0.5rem;
+        }
+        .badge-available {
+            background: #DCFCE7;
+            color: #166534;
+            padding: 0.4rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+        .badge-unavailable {
+            background: #FEE2E2;
+            color: #991B1B;
+            padding: 0.4rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+        .btn-reserve {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.75rem;
+            border-radius: 12px;
+            font-weight: 700;
+            width: 100%;
+            margin-top: 1rem;
+            transition: background 0.2s;
+        }
+        .btn-reserve:hover {
+            background-color: #357ABD;
+            color: white;
+        }
+        .btn-reserve:disabled {
+            background-color: #E2E8F0;
+            color: #94A3B8;
+            cursor: not-allowed;
+        }
+        .nav-back {
+            position: absolute;
+            top: 2rem;
+            left: 2rem;
         }
     </style>
-
 </head>
-
 <body>
 
-<div class="container py-5">
+<div class="header-section">
+    <button class="btn btn-link nav-back text-decoration-none" th:onclick="|location.href='@{/}'|">
+        ← 홈으로
+    </button>
+    <h2>이용 가능한 공간</h2>
+    <p class="text-muted">원하시는 방을 선택하여 예약을 진행하세요</p>
+</div>
 
-    <div class="text-center mb-5">
-        <h2>스터디룸 목록</h2>
-    </div>
-
+<div class="container">
     <div class="row g-4">
-
-        <div class="col-md-4"
-             th:each="room : ${rooms}">
-
-            <div class="card room-card shadow-sm">
-
-                <!-- 이미지 -->
-                <img class="card-img-top room-img"
-                     src="https://images.unsplash.com/photo-1524758631624-e2822e304c36"
-                     alt="room">
-
-                <div class="card-body">
-
-                    <!-- 방 이름 -->
-                    <h5 class="card-title"
-                        th:text="${room.name}">
-                        Room Name
-                    </h5>
-
-                    <!-- 간단 설명 -->
-                    <p class="card-text">
-                        수용 인원 :
-                        <span th:text="${room.capacity}">4</span>명
-                        <br>
-
-                        운영시간 :
-                        <span th:text="${room.openTime}">09:00</span>
-                        ~
-                        <span th:text="${room.closeTime}">23:00</span>
-                    </p>
-
+        <div class="col-md-4 col-lg-3" th:each="room : ${rooms}">
+            <div class="card room-card">
+                <div class="room-image-placeholder">🏢</div>
+                <div class="room-body">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <h3 class="room-title" th:text="${room.name}">방 이름</h3>
+                        <span th:if="${room.available}" class="badge-available">이용가능</span>
+                        <span th:unless="${room.available}" class="badge-unavailable">점검중</span>
+                    </div>
+                    <div class="room-info">
+                        <span>👥</span> <th:block th:text="|최대 ${room.capacity}명|"></th:block>
+                    </div>
+                    <div class="room-info">
+                        <span>🕒</span> <th:block th:text="|${room.openTime} ~ ${room.closeTime}|"></th:block>
+                    </div>
+                    <button class="btn btn-reserve"
+                            th:disabled="${!room.available}"
+                            th:onclick="|location.href='@{/rooms/{roomId}/reserve(roomId=${room.id})}'|">
+                        지금 예약하기
+                    </button>
                 </div>
-
-                <!-- 버튼 영역 -->
-                <div class="card-footer d-flex justify-content-between">
-
-                    <!-- 방 상세 -->
-                    <a class="btn btn-outline-secondary btn-sm"
-                       th:href="@{/rooms/{id}(id=${room.id})}">
-                        방 상세
-                    </a>
-
-                    <!-- 예약하기 -->
-                    <a class="btn btn-primary btn-sm"
-                       th:href="@{/rooms/{id}/reserve(id=${room.id})}">
-                        예약하기
-                    </a>
-
-                </div>
-
             </div>
-
         </div>
-
     </div>
-
 </div>
 
 </body>

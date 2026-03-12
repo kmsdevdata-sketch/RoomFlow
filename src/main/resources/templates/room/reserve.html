@@ -1,193 +1,282 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
-
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="../../static/css/bootstrap.min.css" rel="stylesheet">
     <style>
-
-        .time-grid{
-        display:grid;
-        grid-template-columns:repeat(6,1fr);
-        gap:10px;
-        margin-top:20px;
+        :root {
+            --primary-color: #4A90E2;
+            --selected-bg: #EBF4FF;
+            --active-bg: #4A90E2;
+            --active-text: #ffffff;
+        }
+        body {
+            background-color: #F8FAFC;
+            font-family: 'Pretendard', sans-serif;
+            padding: 3rem 1rem;
+        }
+        .reserve-container {
+            max-width: 800px;
+            margin: auto;
+        }
+        .room-summary {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+        .room-icon-large {
+            width: 80px;
+            height: 80px;
+            background: #EBF4FF;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+        }
+        .room-info-text h3 {
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            color: #1E293B;
+        }
+        .form-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+        /* 시간 블록 스타일 */
+        .time-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 10px;
+            margin-bottom: 2rem;
+        }
+        .time-block {
+            padding: 15px 10px;
+            border: 2px solid #F1F5F9;
+            border-radius: 12px;
+            background: white;
+            text-align: center;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #64748B;
+            user-select: none;
+        }
+        .time-block:hover {
+            border-color: var(--primary-color);
+            background: var(--selected-bg);
+        }
+        .time-block.active {
+            background-color: var(--active-bg);
+            border-color: var(--active-bg);
+            color: var(--active-text);
+        }
+        .time-block.disabled {
+            background-color: #F8FAFC;
+            color: #CBD5E1;
+            cursor: not-allowed;
+            border-color: #F1F5F9;
         }
 
-        .time-block{
-        border:1px solid #ccc;
-        padding:12px;
-        text-align:center;
-        border-radius:8px;
-        cursor:pointer;
+        .selection-summary {
+            background: #F8FAFC;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            border-left: 5px solid var(--primary-color);
+        }
+        .selection-summary p {
+            margin-bottom: 0;
+            font-weight: 700;
+            color: #1E293B;
+            font-size: 1.1rem;
         }
 
-        .time-block.disabled{
-        background:#e0e0e0;
-        cursor:not-allowed;
+        .field-error {
+            color: #EF4444;
+            font-size: 0.85rem;
+            margin-top: 0.25rem;
+            font-weight: 600;
         }
-
-        .time-block.active{
-        background:#0d6efd;
-        color:white;
+        .btn-confirm {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 12px;
+            font-weight: 700;
+            width: 100%;
+            transition: all 0.2s;
         }
-
+        .btn-confirm:hover {
+            background: #357ABD;
+            transform: translateY(-2px);
+        }
+        .btn-back {
+            background: #F1F5F9;
+            color: #64748B;
+            border: none;
+            padding: 1rem;
+            border-radius: 12px;
+            font-weight: 600;
+            width: 100%;
+        }
     </style>
-
 </head>
-
 <body>
 
-<div class="container" style="max-width:800px">
+<div class="container reserve-container">
+    <div class="room-summary">
+        <div class="room-icon-large">🏢</div>
+        <div class="room-info-text">
+            <h3 th:text="${room.name}">방 이름</h3>
+            <p class="text-muted mb-0">
+                👥 정원: <span th:text="${room.capacity}">4</span>명 |
+                🕒 운영: <span th:text="|${room.openTime} - ${room.closeTime}|">09:00 - 22:00</span>
+            </p>
+        </div>
+    </div>
 
-    <h2 th:text="${room.name}">Room</h2>
+    <div class="form-card">
+        <h4 class="mb-4 font-weight-bold">시간 선택</h4>
+        
+        <form th:action="@{/reservations}" th:object="${reservation}" method="post" id="reserveForm">
+            <input type="hidden" name="roomId" th:value="${room.id}">
+            <!-- Hidden inputs for validation binding -->
+            <input type="hidden" th:field="*{startTime}" id="hiddenStartTime">
+            <input type="hidden" th:field="*{endTime}" id="hiddenEndTime">
 
-    <form th:action="@{/reservations}" method="post" id="reservationForm">
-
-        <input type="hidden" name="roomId" th:value="${room.id}">
-
-        <hr>
-
-        <h4>날짜 선택</h4>
-
-        <input type="date"
-               name="date"
-               required
-               class="form-control">
-
-        <hr>
-
-        <h4>예약 시간 선택</h4>
-
-        <div class="time-grid">
-
-            <div th:each="i : ${#numbers.sequence(0,23)}"
-                 class="time-block"
-                 th:classappend="${i < room.openTime.hour or i >= room.closeTime.hour} ? 'disabled'"
-                 th:data-hour="${i}"
-                 onclick="selectBlock(this)">
-
-                <span th:text="|${i}:00 ~ ${i+1}:00|"></span>
-
+            <div class="mb-4">
+                <label th:for="date" class="form-label font-weight-bold">1. 날짜 선택</label>
+                <input type="date" th:field="*{date}" class="form-control" 
+                       th:errorclass="is-invalid" required>
+                <div class="field-error" th:if="${#fields.hasErrors('date')}" th:errors="*{date}">날짜 오류</div>
             </div>
 
-        </div>
+            <label class="form-label font-weight-bold">2. 시간 블록 선택 (시작과 끝 블록을 클릭하세요)</label>
+            <div class="time-grid" id="timeGrid">
+                <!-- 운영 시간에 맞춰 블록 생성 -->
+                <div th:each="hour : ${#numbers.sequence(room.openTime.hour, room.closeTime.hour - 1)}" 
+                     class="time-block" 
+                     th:data-hour="${hour}"
+                     th:text="|${#numbers.formatInteger(hour, 2)}:00|">
+                    09:00
+                </div>
+            </div>
 
-        <hr>
+            <div class="selection-summary">
+                <p>Selected Time: 
+                    <span id="displayStartTime">--:--</span> 
+                    ~ 
+                    <span id="displayEndTime">--:--</span>
+                </p>
+                <div class="field-error" th:if="${#fields.hasErrors('startTime')}" th:errors="*{startTime}">시작시간 오류</div>
+                <div class="field-error" th:if="${#fields.hasErrors('endTime')}" th:errors="*{endTime}">종료시간 오류</div>
+            </div>
 
-        <h4>
+            <div th:if="${#fields.hasGlobalErrors()}" class="global-error mb-4">
+                <p class="field-error text-center" th:each="err : ${#fields.globalErrors()}" th:text="${err}">전체 오류</p>
+            </div>
 
-            StartTime :
-            <span id="startText">-</span>
-
-            &nbsp;&nbsp;
-
-            EndTime :
-            <span id="endText">-</span>
-
-        </h4>
-
-        <input type="hidden" name="startTime" id="startTime">
-        <input type="hidden" name="endTime" id="endTime">
-
-        <hr>
-
-        <button class="btn btn-primary w-100">
-            예약하기
-        </button>
-
-    </form>
-
+            <div class="row g-3">
+                <div class="col-md-8">
+                    <button class="btn btn-confirm" type="submit" id="submitBtn" disabled>예약 신청하기</button>
+                </div>
+                <div class="col-md-4">
+                    <button class="btn btn-back" type="button"
+                            th:onclick="|location.href='@{/rooms}'|">취소</button>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
 
-<script>
+<script th:inline="javascript">
+    const timeBlocks = document.querySelectorAll('.time-block');
+    const hiddenStart = document.getElementById('hiddenStartTime');
+    const hiddenEnd = document.getElementById('hiddenEndTime');
+    const displayStart = document.getElementById('displayStartTime');
+    const displayEnd = document.getElementById('displayEndTime');
+    const submitBtn = document.getElementById('submitBtn');
 
-    let selected = []
+    let firstSelected = null;
+    let secondSelected = null;
 
-    function selectBlock(el){
+    timeBlocks.forEach(block => {
+        block.addEventListener('click', () => {
+            const hour = parseInt(block.dataset.hour);
 
-    if(el.classList.contains("disabled")) return
+            if (firstSelected === null || (firstSelected !== null && secondSelected !== null)) {
+                // 초기 선택 또는 이미 범위가 완성된 상태에서 다시 클릭 시 리셋
+                firstSelected = hour;
+                secondSelected = null;
+            } else {
+                // 두 번째 선택
+                if (hour === firstSelected) {
+                    // 같은 거 클릭 시 초기화
+                    firstSelected = null;
+                    secondSelected = null;
+                } else {
+                    if (hour < firstSelected) {
+                        secondSelected = firstSelected;
+                        firstSelected = hour;
+                    } else {
+                        secondSelected = hour;
+                    }
+                }
+            }
+            updateUI();
+        });
+    });
 
-    const hour = parseInt(el.dataset.hour)
+    function updateUI() {
+        timeBlocks.forEach(block => {
+            const h = parseInt(block.dataset.hour);
+            block.classList.remove('active');
+            
+            if (secondSelected !== null) {
+                if (h >= firstSelected && h <= secondSelected) {
+                    block.classList.add('active');
+                }
+            } else if (firstSelected !== null) {
+                if (h === firstSelected) {
+                    block.classList.add('active');
+                }
+            }
+        });
 
-    if(selected.length === 0){
-
-    selected.push(hour)
-
-    }else{
-
-    const min = Math.min(...selected)
-    const max = Math.max(...selected)
-
-    if(hour === max + 1 || hour === min - 1){
-
-    selected.push(hour)
-
-    }else{
-
-    clearSelection()
-    selected.push(hour)
-
+        if (firstSelected !== null) {
+            const startTimeStr = String(firstSelected).padStart(2, '0') + ':00';
+            displayStart.innerText = startTimeStr;
+            hiddenStart.value = startTimeStr + ':00'; // LocalTime format (HH:mm:ss)
+            
+            if (secondSelected !== null) {
+                const endTimeStr = String(secondSelected + 1).padStart(2, '0') + ':00';
+                displayEnd.innerText = endTimeStr;
+                hiddenEnd.value = endTimeStr + ':00';
+                submitBtn.disabled = false;
+            } else {
+                displayEnd.innerText = '--:--';
+                hiddenEnd.value = '';
+                submitBtn.disabled = true;
+            }
+        } else {
+            displayStart.innerText = '--:--';
+            displayEnd.innerText = '--:--';
+            hiddenStart.value = '';
+            hiddenEnd.value = '';
+            submitBtn.disabled = true;
+        }
     }
-
-    }
-
-    render()
-    updateTime()
-
-    }
-
-    function render(){
-
-    document.querySelectorAll(".time-block")
-    .forEach(b=>b.classList.remove("active"))
-
-    selected.forEach(hour=>{
-    document.querySelector(`[data-hour='${hour}']`)
-    .classList.add("active")
-    })
-
-    }
-
-    function clearSelection(){
-    selected=[]
-    }
-
-    function formatHour(h){
-    return String(h).padStart(2,'0') + ":00"
-    }
-
-    function updateTime(){
-
-    if(selected.length===0) return
-
-    selected.sort((a,b)=>a-b)
-
-    const start = selected[0]
-    const end = selected[selected.length-1]+1
-
-    document.getElementById("startText").innerText = formatHour(start)
-    document.getElementById("endText").innerText = formatHour(end)
-
-    document.getElementById("startTime").value = formatHour(start)
-    document.getElementById("endTime").value = formatHour(end)
-
-    }
-
-    document.getElementById("reservationForm")
-    .addEventListener("submit", function(e){
-
-    const start = document.getElementById("startTime").value
-    const end = document.getElementById("endTime").value
-
-    if(!start || !end){
-
-    alert("예약 시간을 선택해주세요")
-    e.preventDefault()
-
-    }
-
-    })
-
 </script>
 
 </body>

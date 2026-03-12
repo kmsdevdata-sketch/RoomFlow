@@ -2,38 +2,120 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link th:href="@{/css/bootstrap.min.css}"
           href="../../static/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4A90E2;
+            --accent-color: #F8FAFC;
+        }
+        body {
+            background-color: #F1F5F9;
+            font-family: 'Pretendard', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+        .dashboard-container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 3rem;
+            border-radius: 24px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.06);
+        }
+        .welcome-badge {
+            display: inline-block;
+            background: #EBF4FF;
+            color: var(--primary-color);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+        .user-name {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #1E293B;
+            margin-bottom: 2rem;
+        }
+        .menu-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+        .menu-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            border: 2px solid #F1F5F9;
+            border-radius: 20px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            background: white;
+            text-decoration: none;
+            color: #475569;
+        }
+        .menu-item:hover {
+            border-color: var(--primary-color);
+            background: #F8FBFF;
+            transform: translateY(-5px);
+            color: var(--primary-color);
+        }
+        .menu-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .menu-label {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        .logout-form {
+            margin-top: 2.5rem;
+            text-align: center;
+        }
+        .btn-logout {
+            color: #94A3B8;
+            font-weight: 600;
+            text-decoration: none;
+            background: none;
+            border: none;
+            transition: color 0.2s;
+        }
+        .btn-logout:hover {
+            color: #EF4444;
+        }
+    </style>
 </head>
 <body>
-<div class="container" style="max-width: 600px">
-    <div class="py-5 text-center">
-        <h2>홈 화면</h2>
+<div class="container dashboard-container">
+    <div class="text-center">
+        <span class="welcome-badge">Welcome Back</span>
+        <h2 class="user-name" th:text="|${user.name}님, 안녕하세요!|">사용자 이름님</h2>
     </div>
-    <h4 class="mb-3" th:text="|로그인: ${user.name}|">로그인 사용자 이름</h4>
-    <hr class="my-4">
-    <div class="row">
-        <div class="col">
-            <button class="w-100 btn btn-secondary btn-lg" type="button"
-                    th:onclick="|location.href='@{/rooms}'|">
-                방 목록
-            </button>
-        </div>
-        <div class="col">
-            <button class="w-100 btn btn-secondary btn-lg" type="button"
-                    th:onclick="|location.href='@{/reservations}'|">
-                예약 조회
-            </button>
-        </div>
-        <div class="col">
-            <form th:action="@{/auth/logout}" method="post">
-                <button class="w-100 btn btn-dark btn-lg" type="submit">
-                    로그아웃
-                </button>
-            </form>
-        </div>
+
+    <div class="menu-grid">
+        <a th:href="@{/rooms}" class="menu-item">
+            <span class="menu-icon">🏢</span>
+            <span class="menu-label">방 목록 보기</span>
+        </a>
+        <a th:href="@{/reservations}" class="menu-item">
+            <span class="menu-icon">📅</span>
+            <span class="menu-label">나의 예약 내역</span>
+        </a>
     </div>
-    <hr class="my-4">
-</div> <!-- /container -->
+
+    <div class="logout-form">
+        <form th:action="@{/auth/logout}" method="post">
+            <button class="btn-logout" type="submit">
+                안전하게 로그아웃
+            </button>
+        </form>
+    </div>
+</div>
 </body>
 </html>

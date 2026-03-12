@@ -3,6 +3,7 @@ package com.roomflow.web.controller.room;
 
 import com.roomflow.domain.room.Room;
 import com.roomflow.domain.room.RoomRepository;
+import com.roomflow.web.controller.reservation.dto.ReservationCreateDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,6 +41,7 @@ public class RoomController {
     public String reserve(@PathVariable Long roomId, Model model) {
         Room findRoom = roomRepository.findById(roomId);
         model.addAttribute("room", findRoom);
+        model.addAttribute("reservation", new ReservationCreateDto());
         return "room/reserve";
     }
 }

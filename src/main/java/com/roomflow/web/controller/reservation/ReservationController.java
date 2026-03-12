@@ -38,11 +38,7 @@ public class ReservationController {
         if (bindingResult.hasErrors()) {
             return "room/reserve";
         }
-        // 바인딩단계에서 아마 실패해서 validation이 실행이 안되는거같음 그래서 추가 *DTO를 만들어야됌
-        if (reservationCreateDto.getStartTime() == null || reservationCreateDto.getEndTime() == null) {
-            bindingResult.reject("time", "예약 시간을 선택해주세요");
-            return "room/reserve";
-        }
+
         // 권한인증 구현후 삭제
         if (loginUser == null) {
             return "redirect:/login";
