@@ -23,11 +23,12 @@ public class RoomflowApplication {
         - [x] 예약 시간 유효성 검증 (startTime < endTime)
         - [x] 예약 생성 로직 Service로 이동
         - [ ] 예약 중복 검증 로직 구현
-        - [ ] 예약 목록 조회 기능
+        - [x] 예약 목록 조회 기능
         - [ ] 예약 취소 기능
         - [ ] 예약 취소 가능 시간 제한 로직
         [4] Concurrency / Validation
         --------------------------------
+        - [ ] 예약 목록 사용자별 구분
         - [ ] 동일 시간대 예약 동시성 문제 검증
         - [ ] 예약 시간 유효성 검증
         [5] Payment / Extension

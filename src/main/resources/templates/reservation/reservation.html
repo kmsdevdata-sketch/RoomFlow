@@ -1,0 +1,187 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="../../static/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4A90E2;
+            --success-color: #48BB78;
+        }
+        body {
+            background-color: #F8FAFC;
+            font-family: 'Pretendard', sans-serif;
+            padding: 4rem 1rem;
+        }
+        .detail-container {
+            max-width: 600px;
+            margin: auto;
+        }
+        .success-banner {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+        .success-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--success-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 10px 20px rgba(72, 187, 120, 0.2);
+        }
+        .success-banner h2 {
+            font-weight: 800;
+            color: #1E293B;
+        }
+        .reservation-ticket {
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            overflow: hidden;
+            position: relative;
+        }
+        .ticket-header {
+            background: #1E293B;
+            color: white;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .ticket-id {
+            font-family: 'Monaco', monospace;
+            font-weight: 600;
+            letter-spacing: 1px;
+            opacity: 0.8;
+        }
+        .ticket-body {
+            padding: 2.5rem;
+        }
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px dashed #E2E8F0;
+        }
+        .info-row:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+        .info-label {
+            color: #94A3B8;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+        .info-value {
+            color: #1E293B;
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-align: right;
+        }
+        .status-badge {
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+        .status-RESERVATION { background: #EBF4FF; color: #3182CE; }
+        .status-CANCEL { background: #FFF5F5; color: #E53E3E; }
+        .status-COMPLETE { background: #F0FFF4; color: #38A169; }
+
+        .ticket-footer {
+            background: #F8FAFC;
+            padding: 1.5rem 2.5rem;
+            border-top: 2px dashed #E2E8F0;
+            text-align: center;
+        }
+        .btn-group-custom {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        .btn-action {
+            padding: 0.8rem;
+            border-radius: 12px;
+            font-weight: 700;
+            transition: all 0.2s;
+        }
+        .btn-list {
+            background: #F1F5F9;
+            color: #475569;
+            border: none;
+        }
+        .btn-home {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+        }
+        .btn-action:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+
+<div class="detail-container">
+    <div class="success-banner">
+        <div class="success-icon">✓</div>
+        <h2>예약 상세 정보</h2>
+        <p class="text-muted">예약이 정상적으로 확인되었습니다.</p>
+    </div>
+
+    <div class="reservation-ticket">
+        <div class="ticket-header">
+            <span class="ticket-id" th:text="|RES-NO. ${reservation.id}|">RES-NO. 12345</span>
+            <span class="status-badge" 
+                  th:classappend="|status-${reservation.status}|"
+                  th:text="${reservation.status}">RESERVATION</span>
+        </div>
+        
+        <div class="ticket-body">
+            <div class="info-row">
+                <span class="info-label">예약 날짜</span>
+                <span class="info-value" th:text="${#temporals.format(reservation.date, 'yyyy년 MM월 dd일')}">2026년 03월 12일</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">이용 시간</span>
+                <span class="info-value text-primary" th:text="|${reservation.startTime} ~ ${reservation.endTime}|">09:00 ~ 13:00</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">예약 공간</span>
+                <span class="info-value" th:text="|스터디룸 ${reservation.roomId}번|">스터디룸 4번</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">예약자 ID</span>
+                <span class="info-value" th:text="${reservation.userId}">USER-ID</span>
+            </div>
+        </div>
+
+        <div class="ticket-footer">
+            <p class="text-muted small mb-0">
+                예약 생성일: <span th:text="${#temporals.format(reservation.createdTime, 'yyyy-MM-dd HH:mm:ss')}">2026-03-12 15:30:00</span>
+            </p>
+        </div>
+    </div>
+
+    <div class="btn-group-custom">
+        <button class="btn btn-action btn-list" th:onclick="|location.href='@{/reservations}'|">
+            전체 목록 보기
+        </button>
+        <button class="btn btn-action btn-home" th:onclick="|location.href='@{/}'|">
+            홈으로 이동
+        </button>
+    </div>
+</div>
+
+</body>
+</html>
