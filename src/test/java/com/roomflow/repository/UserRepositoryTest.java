@@ -1,16 +1,14 @@
 package com.roomflow.repository;
 
-import com.roomflow.domain.Role;
-import com.roomflow.domain.User;
+import com.roomflow.domain.user.User;
+import com.roomflow.domain.user.UserRepository;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 class UserRepositoryTest {
 

@@ -1,7 +1,5 @@
-package com.roomflow.repository;
+package com.roomflow.domain.user;
 
-import com.roomflow.domain.User;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 

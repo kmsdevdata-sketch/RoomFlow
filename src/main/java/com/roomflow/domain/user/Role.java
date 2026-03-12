@@ -1,4 +1,4 @@
-package com.roomflow.domain;
+package com.roomflow.domain.user;
 
 public enum Role {
     USER("User_Role"),

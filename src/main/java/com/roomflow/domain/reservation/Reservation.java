@@ -1,4 +1,4 @@
-package com.roomflow.domain;
+package com.roomflow.domain.reservation;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;

@@ -1,8 +1,5 @@
-package com.roomflow.repository;
+package com.roomflow.domain.room;
 
-import com.roomflow.domain.Room;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;

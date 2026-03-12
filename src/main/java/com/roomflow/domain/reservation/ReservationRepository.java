@@ -1,7 +1,5 @@
-package com.roomflow.repository;
+package com.roomflow.domain.reservation;
 
-import com.roomflow.domain.Reservation;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;

@@ -1,8 +1,8 @@
-package com.roomflow.controller;
+package com.roomflow.web.controller.room;
 
 
-import com.roomflow.domain.Room;
-import com.roomflow.repository.RoomRepository;
+import com.roomflow.domain.room.Room;
+import com.roomflow.domain.room.RoomRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @RequestMapping("rooms")

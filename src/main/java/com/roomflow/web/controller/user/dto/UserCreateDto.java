@@ -1,8 +1,12 @@
 package com.roomflow.web.controller.user.dto;
 
+import com.roomflow.domain.user.User;
 import jakarta.validation.constraints.*;
+import lombok.Data;
+
 import java.time.LocalDate;
 
+@Data
 public class UserCreateDto {
 
     @NotBlank
@@ -26,5 +30,17 @@ public class UserCreateDto {
 
     @Email
     private String email;
+
+
+    public User toEntity() {
+        return new User(
+                loginId,
+                password,
+                name,
+                birthDate,
+                phoneNumber,
+                email
+        );
+    }
 
 }

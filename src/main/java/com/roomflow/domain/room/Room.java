@@ -1,4 +1,4 @@
-package com.roomflow.domain;
+package com.roomflow.domain.room;
 
 import lombok.Data;
 

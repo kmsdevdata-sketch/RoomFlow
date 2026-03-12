@@ -1,4 +1,4 @@
-package com.roomflow.session;
+package com.roomflow.web.session;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;

@@ -1,10 +1,9 @@
 package com.roomflow;
 
-import com.roomflow.domain.Role;
-import com.roomflow.domain.Room;
-import com.roomflow.domain.User;
-import com.roomflow.repository.RoomRepository;
-import com.roomflow.repository.UserRepository;
+import com.roomflow.domain.room.Room;
+import com.roomflow.domain.user.User;
+import com.roomflow.domain.room.RoomRepository;
+import com.roomflow.domain.user.UserRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

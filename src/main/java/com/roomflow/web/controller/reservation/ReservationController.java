@@ -1,10 +1,10 @@
-package com.roomflow.controller;
+package com.roomflow.web.controller.reservation;
 
-import com.roomflow.SessionConst;
-import com.roomflow.domain.Reservation;
-import com.roomflow.domain.Status;
-import com.roomflow.domain.User;
-import com.roomflow.repository.ReservationRepository;
+import com.roomflow.web.session.SessionConst;
+import com.roomflow.domain.reservation.Reservation;
+import com.roomflow.domain.reservation.Status;
+import com.roomflow.domain.user.User;
+import com.roomflow.domain.reservation.ReservationRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;

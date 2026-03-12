@@ -1,4 +1,4 @@
-package com.roomflow;
+package com.roomflow.web.session;
 
 public interface SessionConst {
 

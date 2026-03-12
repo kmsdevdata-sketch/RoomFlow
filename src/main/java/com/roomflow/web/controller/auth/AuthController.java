@@ -1,15 +1,10 @@
-package com.roomflow.controller;
+package com.roomflow.web.controller.auth;
 
-import com.roomflow.SessionConst;
-import com.roomflow.domain.LoginForm;
-import com.roomflow.domain.Role;
-import com.roomflow.domain.User;
-import com.roomflow.repository.UserRepository;
-import com.roomflow.service.LoginService;
-import com.roomflow.session.SessionMng;
-import jakarta.servlet.http.Cookie;
+import com.roomflow.domain.user.*;
+import com.roomflow.web.controller.user.dto.UserCreateDto;
+import com.roomflow.web.session.SessionConst;
+import com.roomflow.web.session.SessionMng;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -27,22 +23,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class AuthController {
 
     private final LoginService loginService;
-    private final UserRepository userRepository;
-    private final SessionMng sessionMng;
+    private final UserService userService;
 
     @GetMapping("/signup")
-    public String signup(User user) {
+    // 타임리프에서 user로 사용중이라 컨트롤러에서 변경
+    public String signup(@ModelAttribute("user") UserCreateDto user) {
         return "auth/signup";
     }
 
     @PostMapping("/signup")
-    public String save(@Valid User user, BindingResult bindingResult) {
+    public String save(@Valid @ModelAttribute("user") UserCreateDto user,
+                       BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "auth/signup";
         }
-        // TODO UserService필요
-        user.setRole(Role.USER);
-        userRepository.save(user);
+        userService.join(user);
         return "redirect:/";
     }
 

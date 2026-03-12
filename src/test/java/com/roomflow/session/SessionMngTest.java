@@ -1,7 +1,7 @@
 package com.roomflow.session;
 
-import com.roomflow.domain.User;
-import org.assertj.core.api.Assertions;
+import com.roomflow.domain.user.User;
+import com.roomflow.web.session.SessionMng;
 import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -9,7 +9,6 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import java.time.LocalDate;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 class SessionMngTest {
 
