@@ -150,7 +150,8 @@
         <h4 class="mb-4 font-weight-bold">시간 선택</h4>
         
         <form th:action="@{/reservations}" th:object="${reservation}" method="post" id="reserveForm">
-            <input type="hidden" name="roomId" th:value="${room.id}">
+            <!-- roomId를 ReservationCreateDto의 필드와 바인딩 -->
+            <input type="hidden" th:field="*{roomId}">
             <!-- Hidden inputs for validation binding -->
             <input type="hidden" th:field="*{startTime}" id="hiddenStartTime">
             <input type="hidden" th:field="*{endTime}" id="hiddenEndTime">

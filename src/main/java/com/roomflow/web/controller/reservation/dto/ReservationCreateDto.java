@@ -13,6 +13,8 @@ import java.time.LocalTime;
 public class ReservationCreateDto {
 
     @NotNull
+    private Long roomId;
+    @NotNull
     @FutureOrPresent
     private LocalDate date;
     @NotNull
@@ -23,6 +25,7 @@ public class ReservationCreateDto {
 
     public Reservation toEntity() {
         return new Reservation(
+                roomId,
                 date,
                 startTime,
                 endTime

@@ -39,9 +39,15 @@ public class RoomController {
     // 예약 페이지
     @GetMapping("/{roomId}/reserve")
     public String reserve(@PathVariable Long roomId, Model model) {
+
         Room findRoom = roomRepository.findById(roomId);
+
+        ReservationCreateDto dto = new ReservationCreateDto();
+        dto.setRoomId(roomId);
+
         model.addAttribute("room", findRoom);
-        model.addAttribute("reservation", new ReservationCreateDto());
+        model.addAttribute("reservation", dto);
+
         return "room/reserve";
     }
 }

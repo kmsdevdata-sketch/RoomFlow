@@ -8,13 +8,18 @@ import com.roomflow.domain.user.User;
 import com.roomflow.domain.reservation.ReservationRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
 
+
+@Slf4j
 @RequiredArgsConstructor
 @RequestMapping("reservations")
 @Controller
@@ -25,7 +30,8 @@ public class ReservationController {
     // 예약 목록
     @GetMapping()
     public String reservations(Model model) {
-
+        List<Reservation> reservationList = reservationService.findAll();
+        model.addAttribute("reservations", reservationList);
         return "reservation/reservations";
     }
 
@@ -36,6 +42,7 @@ public class ReservationController {
                                     RedirectAttributes redirectAttributes,
                                     @SessionAttribute(name = SessionConst.LOGIN_USER,required = false) User loginUser) {
         if (bindingResult.hasErrors()) {
+            log.info("validation error = {}",bindingResult);
             return "room/reserve";
         }
 
@@ -43,8 +50,9 @@ public class ReservationController {
         if (loginUser == null) {
             return "redirect:/login";
         }
+        log.info("ReservationController createReservation join start");
         Long joinId = reservationService.join(reservationCreateDto, loginUser);
-
+        log.info("ReservationController createReservation join end");
         redirectAttributes.addAttribute("reservationId", joinId);
         return "redirect:/reservations/{reservationId}";
     }

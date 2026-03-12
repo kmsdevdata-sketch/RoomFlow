@@ -19,7 +19,8 @@ public class Reservation {
     private Status status;
     private LocalTime createdTime;
 
-    public Reservation(LocalDate date, LocalTime startTime, LocalTime endTime) {
+    public Reservation(Long roomId,LocalDate date, LocalTime startTime, LocalTime endTime) {
+        this.roomId = roomId;
         this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;

@@ -1,0 +1,148 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="../../static/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4A90E2;
+        }
+        body {
+            background-color: #F8FAFC;
+            font-family: 'Pretendard', sans-serif;
+            padding-bottom: 5rem;
+        }
+        .header-section {
+            background: white;
+            padding: 3rem 0;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #E2E8F0;
+            text-align: center;
+        }
+        .header-section h2 {
+            font-weight: 800;
+            color: #1E293B;
+        }
+        .nav-back {
+            position: absolute;
+            top: 2rem;
+            left: 2rem;
+        }
+        .reservation-card {
+            background: white;
+            border-radius: 16px;
+            border: none;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+            margin-bottom: 1rem;
+            padding: 1.5rem;
+            transition: transform 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .reservation-card:hover {
+            transform: scale(1.01);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.06);
+        }
+        .res-date-box {
+            text-align: center;
+            padding-right: 2rem;
+            border-right: 2px solid #F1F5F9;
+            min-width: 120px;
+        }
+        .res-date-day {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--primary-color);
+        }
+        .res-date-year {
+            font-size: 0.85rem;
+            color: #94A3B8;
+        }
+        .res-info {
+            flex-grow: 1;
+            padding-left: 2rem;
+        }
+        .res-room-name {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #1E293B;
+            margin-bottom: 0.25rem;
+        }
+        .res-time {
+            font-size: 0.95rem;
+            color: #64748B;
+        }
+        .status-badge {
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+        .status-RESERVATION { background: #EBF4FF; color: #3182CE; }
+        .status-CANCEL { background: #FFF5F5; color: #E53E3E; }
+        .status-COMPLETE { background: #F0FFF4; color: #38A169; }
+
+        .empty-state {
+            text-align: center;
+            padding: 5rem 0;
+            color: #94A3B8;
+        }
+        .empty-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header-section">
+    <button class="btn btn-link nav-back text-decoration-none" th:onclick="|location.href='@{/}'|">
+        ← 홈으로
+    </button>
+    <h2>나의 예약 내역</h2>
+    <p class="text-muted">지금까지 이용하신 예약 리스트입니다</p>
+</div>
+
+<div class="container" style="max-width: 800px;">
+    <div th:if="${not #lists.isEmpty(reservations)}">
+        <div th:each="res : ${reservations}" class="reservation-card" 
+             th:onclick="|location.href='@{/reservations/{id}(id=${res.id})}'|" style="cursor: pointer;">
+            
+            <div class="res-date-box">
+                <div class="res-date-day" th:text="${#temporals.format(res.date, 'MM.dd')}">03.12</div>
+                <div class="res-date-year" th:text="${#temporals.format(res.date, 'yyyy')}">2026</div>
+            </div>
+
+            <div class="res-info">
+                <div class="res-room-name" th:text="|공간 번호: ${res.roomId}번 방|">스터디룸 A</div>
+                <div class="res-time">
+                    <span th:text="|${res.startTime} ~ ${res.endTime}|">09:00 ~ 13:00</span>
+                    <span class="mx-2 text-muted">|</span>
+                    <span class="small" th:text="|예약일: ${#temporals.format(res.createdTime, 'HH:mm')}|">15:30</span>
+                </div>
+            </div>
+
+            <div class="res-status">
+                <span class="status-badge"
+                      th:classappend="|status-${res.status}|"
+                      th:text="${res.status}">RESERVATION</span>
+            </div>
+        </div>
+    </div>
+
+    <div th:if="${#lists.isEmpty(reservations)}" class="empty-state">
+        <span class="empty-icon">📅</span>
+        <h4>아직 예약 내역이 없네요!</h4>
+        <p>새로운 공간을 예약하여 이용해보세요.</p>
+        <button class="btn btn-primary mt-3" th:onclick="|location.href='@{/rooms}'|">
+            방 둘러보기
+        </button>
+    </div>
+</div>
+
+</body>
+</html>
