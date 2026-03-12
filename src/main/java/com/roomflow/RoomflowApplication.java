@@ -10,17 +10,18 @@ public class RoomflowApplication {
         ====================================================
         [1] Architecture / Structure
         --------------------------------
-        - [ ] Reservation 입력 DTO 도입 (Form 객체 분리)
-        - [ ] Domain별 Service Layer 구현
-        - [ ] Controller → Service → Repository 구조 정리
+        - [x] UserCreateDto 도입
+        - [x] Reservation 입력 DTO 도입 (Form 객체 분리)
+        - [x] Domain별 Service Layer 구현
+        - [x] Controller → Service → Repository 구조 정리
         [2] Authentication / Security
         --------------------------------
         - [ ] Session 기반 로그인 권한 검증 (Interceptor 적용)
         - [ ] 비밀번호 암호화 (BCrypt)
         [3] Reservation Domain
         --------------------------------
-        - [ ] 예약 시간 유효성 검증 (startTime < endTime)
-        - [ ] 예약 생성 로직 Service로 이동
+        - [x] 예약 시간 유효성 검증 (startTime < endTime)
+        - [x] 예약 생성 로직 Service로 이동
         - [ ] 예약 중복 검증 로직 구현
         - [ ] 예약 목록 조회 기능
         - [ ] 예약 취소 기능

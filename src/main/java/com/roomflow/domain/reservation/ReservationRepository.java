@@ -19,7 +19,7 @@ public class ReservationRepository {
         return saveReservation;
     }
 
-    public Reservation findById(Long id) {
+    public  Reservation findById(Long id) {
         return store.get(id);
     }
 
