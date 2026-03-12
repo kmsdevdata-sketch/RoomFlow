@@ -29,12 +29,18 @@ public class ReservationController {
     }
 
     // 예약 생성
+    // TODO form DTO가 필요할것 같음
     @PostMapping()
     public String createReservation(@Valid Reservation reservation,
                                     BindingResult bindingResult,
                                     RedirectAttributes redirectAttributes,
                                     @SessionAttribute(name = SessionConst.LOGIN_USER,required = false) User loginUser) {
         if (bindingResult.hasErrors()) {
+            return "room/reserve";
+        }
+        // 바인딩단계에서 아마 실패해서 validation이 실행이 안되는거같음 그래서 추가 *DTO를 만들어야됌
+        if (reservation.getStartTime() == null || reservation.getEndTime() == null) {
+            bindingResult.reject("time", "예약 시간을 선택해주세요");
             return "room/reserve";
         }
         // 권한인증 구현후 삭제
