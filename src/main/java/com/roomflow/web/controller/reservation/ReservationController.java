@@ -64,7 +64,6 @@ public class ReservationController {
         return "/reservation/reservation";
     }
 
-    // 예약 취소
 
 
 }
