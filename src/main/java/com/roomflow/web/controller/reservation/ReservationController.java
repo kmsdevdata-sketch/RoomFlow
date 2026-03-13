@@ -29,8 +29,9 @@ public class ReservationController {
 
     // 예약 목록
     @GetMapping()
-    public String reservations(Model model) {
-        List<Reservation> reservationList = reservationService.findAll();
+    public String reservations(Model model,
+                               @SessionAttribute(name = SessionConst.LOGIN_USER,required = false) User loginUser) {
+        List<Reservation> reservationList = reservationService.findByUserId(loginUser.getId());
         model.addAttribute("reservations", reservationList);
         return "reservation/reservations";
     }
