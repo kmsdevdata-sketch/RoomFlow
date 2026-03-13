@@ -18,7 +18,7 @@ public class RoomRepository {
         return room;
     }
 
-    public Room findById(Long id) {
+    public Room findByRoomId(Long id) {
         return store.get(id);
     }
 

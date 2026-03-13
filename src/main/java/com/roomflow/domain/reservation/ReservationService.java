@@ -6,8 +6,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Slf4j
 @Service
@@ -37,5 +41,19 @@ public class ReservationService {
 
     public List<Reservation> findByUserId(Long id) {
         return reservationRepository.findByUserId(id);
+    }
+
+    public List<Integer> findReservedTimesByRoomAndDate(Long roomId, LocalDate date) {
+        return reservationRepository.findAll().stream()
+                .filter(reservation -> reservation.getRoomId().equals(roomId)
+                                                    && reservation.getDate().equals(date)) // 선택한방 & 선택한 날짜와 동일한
+                .flatMap(reservation -> {
+                    int start = reservation.getStartTime().getHour();
+                    int end = reservation.getEndTime().getHour();
+                    return IntStream.range(start, end).boxed(); // 예약 구간을 시간단위로 분해 ex.10~13 => 10,11,12
+                })
+                .distinct()
+                .sorted()
+                .collect(Collectors.toList());
     }
 }
