@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -31,7 +30,7 @@ public class ReservationService {
         return reservationRepository.save(reservation).getId();
     }
 
-    public Reservation findReservation(Long reservationId) {
+    public Reservation findReservationById(Long reservationId) {
         return reservationRepository.findById(reservationId);
     }
 
@@ -55,5 +54,9 @@ public class ReservationService {
                 .distinct()
                 .sorted()
                 .collect(Collectors.toList());
+    }
+
+    public void cancelReservation(Long reservationId) {
+        reservationRepository.findById(reservationId).cancel();
     }
 }

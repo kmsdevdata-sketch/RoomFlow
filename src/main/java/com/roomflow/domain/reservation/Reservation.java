@@ -1,9 +1,9 @@
 package com.roomflow.domain.reservation;
 
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Data
@@ -24,5 +24,18 @@ public class Reservation {
         this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
+    }
+
+    public void cancel() {
+
+        LocalDateTime reservationStart = LocalDateTime.of(date, startTime);
+
+        LocalDateTime cancelDeadline = LocalDateTime.now().plusMinutes(30);
+
+        if (reservationStart.isBefore(cancelDeadline)) {
+            throw new IllegalStateException("예약 시작 30분 전까지만 취소 가능합니다.");
+        }
+
+        this.status = Status.CANCELED;
     }
 }

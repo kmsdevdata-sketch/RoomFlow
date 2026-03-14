@@ -5,11 +5,9 @@ import com.roomflow.web.controller.reservation.dto.ReservationCreateDto;
 import com.roomflow.web.session.SessionConst;
 import com.roomflow.domain.reservation.Reservation;
 import com.roomflow.domain.user.User;
-import com.roomflow.domain.reservation.ReservationRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -30,7 +28,7 @@ public class ReservationController {
     // 예약 목록
     @GetMapping()
     public String reservations(Model model,
-                               @SessionAttribute(name = SessionConst.LOGIN_USER,required = false) User loginUser) {
+                               @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser) {
         List<Reservation> reservationList = reservationService.findByUserId(loginUser.getId());
         model.addAttribute("reservations", reservationList);
         return "reservation/reservations";
@@ -41,9 +39,9 @@ public class ReservationController {
     public String createReservation(@Valid ReservationCreateDto reservationCreateDto,
                                     BindingResult bindingResult,
                                     RedirectAttributes redirectAttributes,
-                                    @SessionAttribute(name = SessionConst.LOGIN_USER,required = false) User loginUser) {
+                                    @SessionAttribute(name = SessionConst.LOGIN_USER, required = false) User loginUser) {
         if (bindingResult.hasErrors()) {
-            log.info("validation error = {}",bindingResult);
+            log.info("validation error = {}", bindingResult);
             return "room/reserve";
         }
 
@@ -60,12 +58,22 @@ public class ReservationController {
 
     // 예약 상세
     @GetMapping("/{reservationId}")
-    public String reservation(@PathVariable Long reservationId,Model model) {
-        Reservation findReservation = reservationService.findReservation(reservationId);
+    public String reservation(@PathVariable Long reservationId, Model model) {
+        Reservation findReservation = reservationService.findReservationById(reservationId);
         model.addAttribute("reservation", findReservation);
         return "/reservation/reservation";
     }
 
+    @PostMapping("/{reservationId}/cancel")
+    public String cancel(@PathVariable Long reservationId, Model model,
+                         RedirectAttributes redirectAttributes) {
 
-
+        try {
+            reservationService.cancelReservation(reservationId);
+        } catch (IllegalStateException e) {
+            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage()); //View에서 alert처리
+        }
+        // 추후 취소 페이지도 고려해보기
+        return "redirect:/reservation/reservations";
+    }
 }
