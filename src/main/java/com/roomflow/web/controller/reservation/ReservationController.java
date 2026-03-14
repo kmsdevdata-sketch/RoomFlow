@@ -74,6 +74,6 @@ public class ReservationController {
             redirectAttributes.addFlashAttribute("errorMessage", e.getMessage()); //View에서 alert처리
         }
         // 추후 취소 페이지도 고려해보기
-        return "redirect:/reservation/reservations";
+        return "redirect:/reservations";
     }
 }

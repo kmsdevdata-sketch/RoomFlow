@@ -28,8 +28,11 @@ public class Reservation {
 
     public void cancel() {
 
-        LocalDateTime reservationStart = LocalDateTime.of(date, startTime);
+        if (this.status != Status.RESERVATION) {
+            throw new IllegalStateException("취소할 수 없는 예약 상태입니다.");
+        }
 
+        LocalDateTime reservationStart = LocalDateTime.of(date, startTime);
         LocalDateTime cancelDeadline = LocalDateTime.now().plusMinutes(30);
 
         if (reservationStart.isBefore(cancelDeadline)) {

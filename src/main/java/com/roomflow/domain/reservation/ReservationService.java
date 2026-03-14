@@ -39,7 +39,7 @@ public class ReservationService {
     }
 
     public List<Reservation> findByUserId(Long id) {
-        return reservationRepository.findByUserId(id);
+        return reservationRepository.findReservationListByUser(id);
     }
 
     public List<Integer> findReservedTimesByRoomAndDate(Long roomId, LocalDate date) {

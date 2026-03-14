@@ -100,7 +100,26 @@
             background: #F8FAFC;
             padding: 1.5rem 2.5rem;
             border-top: 2px dashed #E2E8F0;
+        }
+        .ticket-footer-meta {
             text-align: center;
+        }
+        .ticket-actions {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 1rem;
+        }
+        .btn-cancel-reservation {
+            background: #FFF1F2;
+            color: #E11D48;
+            border: 1px solid #FECDD3;
+            padding: 0.7rem 1.1rem;
+            border-radius: 12px;
+            font-weight: 700;
+        }
+        .btn-cancel-reservation:hover {
+            background: #FFE4E6;
+            color: #BE123C;
         }
         .btn-group-custom {
             display: grid;
@@ -167,9 +186,16 @@
         </div>
 
         <div class="ticket-footer">
-            <p class="text-muted small mb-0">
+            <p class="ticket-footer-meta text-muted small mb-0">
                 예약 생성일: <span th:text="${#temporals.format(reservation.createdTime, 'yyyy-MM-dd HH:mm:ss')}">2026-03-12 15:30:00</span>
             </p>
+            <div class="ticket-actions" th:if="${reservation.status.name() == 'RESERVATION'}">
+                <form th:action="@{/reservations/{reservationId}/cancel(reservationId=${reservation.id})}" method="post">
+                    <button type="submit" class="btn btn-cancel-reservation">
+                        예약취소하기
+                    </button>
+                </form>
+            </div>
         </div>
     </div>
 

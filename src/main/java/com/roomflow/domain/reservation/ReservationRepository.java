@@ -31,7 +31,7 @@ public class ReservationRepository {
         return new ArrayList<>(store.values());
     }
 
-    public List<Reservation> findByUserId(Long userId) {
+    public List<Reservation> findReservationListByUser(Long userId) {
         return store.values().stream()
                 .filter(r -> userId.equals(r.getUserId())) // NPE발생하지 않도록 하는게 좋은습관
                 .toList();
