@@ -45,7 +45,8 @@ public class ReservationService {
     public List<Integer> findReservedTimesByRoomAndDate(Long roomId, LocalDate date) {
         return reservationRepository.findAll().stream()
                 .filter(reservation -> reservation.getRoomId().equals(roomId)
-                                                    && reservation.getDate().equals(date)) // 선택한방 & 선택한 날짜와 동일한
+                                                    && reservation.getDate().equals(date)
+                                                    && reservation.getStatus().equals(Status.RESERVATION)) // 선택한방 & 선택한 날짜와 동일한
                 .flatMap(reservation -> {
                     int start = reservation.getStartTime().getHour();
                     int end = reservation.getEndTime().getHour();
