@@ -1,5 +1,7 @@
 package com.roomflow.domain.reservation;
 
+import com.roomflow.domain.reservation.entity.Reservation;
+import com.roomflow.domain.reservation.entity.Status;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;

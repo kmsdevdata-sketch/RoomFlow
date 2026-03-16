@@ -1,13 +1,15 @@
 package com.roomflow.domain.user;
 
+import com.roomflow.domain.user.entity.Role;
+import com.roomflow.domain.user.entity.User;
+import com.roomflow.domain.user.repository.UserRepository;
+import com.roomflow.domain.user.service.UserService;
 import com.roomflow.web.controller.user.dto.UserCreateDto;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 class UserServiceTest {
 

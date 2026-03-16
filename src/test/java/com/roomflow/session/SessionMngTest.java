@@ -1,6 +1,6 @@
 package com.roomflow.session;
 
-import com.roomflow.domain.user.User;
+import com.roomflow.domain.user.entity.User;
 import com.roomflow.web.session.SessionMng;
 import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockHttpServletRequest;

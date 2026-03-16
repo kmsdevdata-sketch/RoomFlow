@@ -1,6 +1,9 @@
-package com.roomflow.domain.reservation;
+package com.roomflow.domain.reservation.service;
 
-import com.roomflow.domain.user.User;
+import com.roomflow.domain.reservation.entity.Reservation;
+import com.roomflow.domain.reservation.entity.Status;
+import com.roomflow.domain.reservation.repository.ReservationRepository;
+import com.roomflow.domain.user.entity.User;
 import com.roomflow.web.controller.reservation.dto.ReservationCreateDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

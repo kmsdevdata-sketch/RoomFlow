@@ -1,6 +1,6 @@
 package com.roomflow.web.controller.user.dto;
 
-import com.roomflow.domain.user.User;
+import com.roomflow.domain.user.entity.User;
 import jakarta.validation.constraints.*;
 import lombok.Data;
 

@@ -1,8 +1,8 @@
 package com.roomflow.web.controller.home;
 
 import com.roomflow.web.session.SessionConst;
-import com.roomflow.domain.user.User;
-import com.roomflow.domain.user.UserRepository;
+import com.roomflow.domain.user.entity.User;
+import com.roomflow.domain.user.repository.UserRepository;
 import com.roomflow.web.session.SessionMng;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,4 +1,4 @@
-package com.roomflow.domain.reservation;
+package com.roomflow.domain.reservation.entity;
 
 import com.roomflow.domain.common.BaseEntity;
 import lombok.Data;

@@ -1,10 +1,10 @@
 package com.roomflow.web.controller.reservation;
 
-import com.roomflow.domain.reservation.ReservationService;
+import com.roomflow.domain.reservation.service.ReservationService;
 import com.roomflow.web.controller.reservation.dto.ReservationCreateDto;
 import com.roomflow.web.session.SessionConst;
-import com.roomflow.domain.reservation.Reservation;
-import com.roomflow.domain.user.User;
+import com.roomflow.domain.reservation.entity.Reservation;
+import com.roomflow.domain.user.entity.User;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

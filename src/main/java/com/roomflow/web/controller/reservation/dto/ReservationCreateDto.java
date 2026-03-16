@@ -1,7 +1,6 @@
 package com.roomflow.web.controller.reservation.dto;
 
-import com.roomflow.domain.reservation.Reservation;
-import com.roomflow.domain.user.User;
+import com.roomflow.domain.reservation.entity.Reservation;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;

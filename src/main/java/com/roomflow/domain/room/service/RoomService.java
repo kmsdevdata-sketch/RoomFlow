@@ -1,6 +1,7 @@
-package com.roomflow.domain.room;
+package com.roomflow.domain.room.service;
 
-import com.roomflow.domain.reservation.ReservationRepository;
+import com.roomflow.domain.room.entity.Room;
+import com.roomflow.domain.room.repository.RoomRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -1,5 +1,6 @@
-package com.roomflow.domain.room;
+package com.roomflow.domain.room.repository;
 
+import com.roomflow.domain.room.entity.Room;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;

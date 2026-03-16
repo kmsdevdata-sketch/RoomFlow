@@ -1,5 +1,6 @@
-package com.roomflow.domain.reservation;
+package com.roomflow.domain.reservation.repository;
 
+import com.roomflow.domain.reservation.entity.Reservation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 

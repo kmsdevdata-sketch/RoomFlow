@@ -1,10 +1,9 @@
 package com.roomflow.web.controller.room;
 
 
-import com.roomflow.domain.reservation.ReservationService;
-import com.roomflow.domain.room.Room;
-import com.roomflow.domain.room.RoomRepository;
-import com.roomflow.domain.room.RoomService;
+import com.roomflow.domain.reservation.service.ReservationService;
+import com.roomflow.domain.room.entity.Room;
+import com.roomflow.domain.room.service.RoomService;
 import com.roomflow.web.controller.reservation.dto.ReservationCreateDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;

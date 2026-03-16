@@ -1,7 +1,7 @@
 package com.roomflow.repository;
 
-import com.roomflow.domain.user.User;
-import com.roomflow.domain.user.UserRepository;
+import com.roomflow.domain.user.entity.User;
+import com.roomflow.domain.user.repository.UserRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 

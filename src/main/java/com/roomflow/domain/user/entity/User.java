@@ -1,7 +1,6 @@
-package com.roomflow.domain.user;
+package com.roomflow.domain.user.entity;
 
 import com.roomflow.domain.common.BaseEntity;
-import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 
 import java.time.LocalDate;

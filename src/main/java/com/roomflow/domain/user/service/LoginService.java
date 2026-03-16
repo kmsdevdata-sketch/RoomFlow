@@ -1,5 +1,7 @@
-package com.roomflow.domain.user;
+package com.roomflow.domain.user.service;
 
+import com.roomflow.domain.user.entity.User;
+import com.roomflow.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
