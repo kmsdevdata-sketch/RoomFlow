@@ -39,7 +39,7 @@ public class RoomflowApplication {
         ---------------------------------
         - [x] MySQL 로컬 환경 구성 및 Workbench 연결
         - [x] roomflow 데이터베이스 생성
-        - [ ] 핵심 테이블 스키마 설계 (users,room,reservations)
+        - [x] 핵심 테이블 스키마 설계 (users,room,reservations)
         - [ ] Spring Boot DataSource 설정
         - [ ] JDBC 기반 Repository 구조 도입
         ====================================================
