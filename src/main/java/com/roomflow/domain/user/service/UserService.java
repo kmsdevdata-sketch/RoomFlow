@@ -2,7 +2,7 @@ package com.roomflow.domain.user.service;
 
 import com.roomflow.domain.user.entity.Role;
 import com.roomflow.domain.user.entity.User;
-import com.roomflow.domain.user.repository.UserRepository;
+import com.roomflow.domain.user.repository.MemoryUserRepository;
 import com.roomflow.web.controller.user.dto.UserCreateDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserService {
 
-    private final UserRepository userRepository;
+    private final MemoryUserRepository userRepository;
 
     public void join(UserCreateDto userDto) {
         User user = userDto.toEntity();

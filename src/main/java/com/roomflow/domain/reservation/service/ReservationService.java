@@ -2,7 +2,7 @@ package com.roomflow.domain.reservation.service;
 
 import com.roomflow.domain.reservation.entity.Reservation;
 import com.roomflow.domain.reservation.entity.Status;
-import com.roomflow.domain.reservation.repository.ReservationRepository;
+import com.roomflow.domain.reservation.repository.MemoryReservationRepository;
 import com.roomflow.domain.user.entity.User;
 import com.roomflow.web.controller.reservation.dto.ReservationCreateDto;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,7 @@ import java.util.stream.IntStream;
 @RequiredArgsConstructor
 public class ReservationService {
 
-    private final ReservationRepository reservationRepository;
+    private final MemoryReservationRepository reservationRepository;
 
 
     public Long join(ReservationCreateDto reservationCreateDto, User loginUser) {

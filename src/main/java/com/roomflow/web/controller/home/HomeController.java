@@ -2,7 +2,7 @@ package com.roomflow.web.controller.home;
 
 import com.roomflow.web.session.SessionConst;
 import com.roomflow.domain.user.entity.User;
-import com.roomflow.domain.user.repository.UserRepository;
+import com.roomflow.domain.user.repository.MemoryUserRepository;
 import com.roomflow.web.session.SessionMng;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 @RequiredArgsConstructor
 public class HomeController {
 
-    private final UserRepository userRepository;
+    private final MemoryUserRepository userRepository;
     private final SessionMng sessionMng;
 
     @GetMapping("/")

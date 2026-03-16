@@ -2,7 +2,7 @@ package com.roomflow.domain.user;
 
 import com.roomflow.domain.user.entity.Role;
 import com.roomflow.domain.user.entity.User;
-import com.roomflow.domain.user.repository.UserRepository;
+import com.roomflow.domain.user.repository.MemoryUserRepository;
 import com.roomflow.domain.user.service.UserService;
 import com.roomflow.web.controller.user.dto.UserCreateDto;
 import org.junit.jupiter.api.Test;
@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.*;
 
 class UserServiceTest {
 
-    UserRepository userRepository = new UserRepository();
+    MemoryUserRepository userRepository = new MemoryUserRepository();
     UserService userService = new UserService(userRepository);
 
     @Test

@@ -2,8 +2,8 @@ package com.roomflow;
 
 import com.roomflow.domain.room.entity.Room;
 import com.roomflow.domain.user.entity.User;
-import com.roomflow.domain.room.repository.RoomRepository;
-import com.roomflow.domain.user.repository.UserRepository;
+import com.roomflow.domain.room.repository.MemoryRoomRepository;
+import com.roomflow.domain.user.repository.MemoryUserRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,8 +17,8 @@ import java.time.LocalTime;
 @RequiredArgsConstructor
 public class TestDataInit {
 
-    private final UserRepository userRepository;
-    private final RoomRepository roomRepository;
+    private final MemoryUserRepository userRepository;
+    private final MemoryRoomRepository roomRepository;
 
     @PostConstruct
     public void init() {

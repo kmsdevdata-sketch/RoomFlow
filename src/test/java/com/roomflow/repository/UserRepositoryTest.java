@@ -1,7 +1,7 @@
 package com.roomflow.repository;
 
 import com.roomflow.domain.user.entity.User;
-import com.roomflow.domain.user.repository.UserRepository;
+import com.roomflow.domain.user.repository.MemoryUserRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.*;
 
 class UserRepositoryTest {
 
-    UserRepository userRepository = new UserRepository();
+    MemoryUserRepository userRepository = new MemoryUserRepository();
 
     @AfterEach
     void afterEach() {
