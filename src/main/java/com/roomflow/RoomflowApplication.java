@@ -35,6 +35,13 @@ public class RoomflowApplication {
         --------------------------------
         - [ ] 포인트 기반 결제 시스템
         - [ ] 결제 성공 후 예약 확정 처리
+        [6] Database
+        ---------------------------------
+        - [x] MySQL 로컬 환경 구성 및 Workbench 연결
+        - [x] roomflow 데이터베이스 생성
+        - [ ] 핵심 테이블 스키마 설계 (users,room,reservations)
+        - [ ] Spring Boot DataSource 설정
+        - [ ] JDBC 기반 Repository 구조 도입
         ====================================================
      */
 

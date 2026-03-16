@@ -1,5 +1,6 @@
 package com.roomflow.domain.reservation;
 
+import com.roomflow.domain.common.BaseEntity;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -7,7 +8,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Data
-public class Reservation {
+public class Reservation extends BaseEntity {
     private Long id;
     private Long userId;
     private Long roomId;
