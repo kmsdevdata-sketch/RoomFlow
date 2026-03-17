@@ -23,11 +23,8 @@ public class MemoryUserRepository implements UserRepository{
         return user;
     }
 
-    public User findById(Long id) {
-        // 3/4 User를 그대로 반환하면 좋지않을것 같지만 정확히 나은 설계 대체를 알지못하여 우선은 그냥 반환
-        // 3/6 login과 그외서비스등등 개발하면서 아이디를 기준반환값을 사용할경우가 많아 아직 냅둠
-        // 지금 생각으로는 DTO?를 만들어서 넘기는게 좋지않을까 싶음 근데 아직도 필요성은 못느껴 냅두기
-        return store.get(id);
+    public Optional<User> findById(Long id) {
+        return Optional.ofNullable(store.get(id));
     }
 
     public List<User> findAll() {

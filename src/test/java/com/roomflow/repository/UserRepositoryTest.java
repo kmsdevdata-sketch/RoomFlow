@@ -2,6 +2,7 @@ package com.roomflow.repository;
 
 import com.roomflow.domain.user.entity.User;
 import com.roomflow.domain.user.repository.MemoryUserRepository;
+import com.roomflow.exception.NotFoundException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
@@ -25,7 +26,8 @@ class UserRepositoryTest {
         // when
         User savedUser = userRepository.save(user);
         // then
-        User findUser = userRepository.findById(user.getId());
+        User findUser = userRepository.findById(user.getId())
+                .orElseThrow(()-> new NotFoundException("유저가 존재하지 않습니다"));
         assertThat(findUser).isEqualTo(savedUser);
     }
 
@@ -35,7 +37,8 @@ class UserRepositoryTest {
         User user = new User("123", "123", "kim", LocalDate.now(), "01012345678", "email.com");
         //when
         User savedUser = userRepository.save(user);
-        User findUser = userRepository.findById(savedUser.getId());
+        User findUser = userRepository.findById(savedUser.getId())
+                .orElseThrow(()-> new NotFoundException("유저가 존재하지 않습니다"));
         //then
         assertThat(savedUser).isEqualTo(findUser);
     }
