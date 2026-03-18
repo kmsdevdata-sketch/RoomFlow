@@ -77,7 +77,17 @@ public class JdbcReservationRepository implements ReservationRepository{
 
     @Override
     public List<Reservation> findReservationListByUser(Long userId) {
-        return List.of();
+        //store.values().stream()
+        //      .filter(r -> userId.equals(r.getUserId())) // NPE발생하지 않도록 하는게 좋은습관
+        //    .toList();
+
+        String sql = """
+                select *
+                from reservations
+                where user_id = ?
+                """;
+
+        return jdbcTemplate.query(sql,reservationRowMapper(),userId);
     }
 
     public RowMapper<Reservation> reservationRowMapper() {

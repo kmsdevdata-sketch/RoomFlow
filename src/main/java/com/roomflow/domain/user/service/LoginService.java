@@ -2,13 +2,14 @@ package com.roomflow.domain.user.service;
 
 import com.roomflow.domain.user.entity.User;
 import com.roomflow.domain.user.repository.MemoryUserRepository;
+import com.roomflow.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class LoginService {
-    private final MemoryUserRepository userRepository;
+    private final UserRepository userRepository;
     // 옵셔널로 받아와서 패스워드 일치하면 해당 객체리턴 아니면 null
     public User login(String loginId, String password) {
         return userRepository.findByLoginId(loginId).filter(u ->
