@@ -3,6 +3,7 @@ package com.roomflow.domain.user.repository;
 import com.roomflow.domain.user.entity.Role;
 import com.roomflow.domain.user.entity.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Primary;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -17,6 +18,7 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
+@Primary
 @Repository
 @RequiredArgsConstructor
 public class JdbcUserRepository implements UserRepository {

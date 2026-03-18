@@ -2,6 +2,7 @@ package com.roomflow.domain.room.repository;
 
 import com.roomflow.domain.room.entity.Room;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Primary;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -16,6 +17,7 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
+@Primary
 @Repository
 @RequiredArgsConstructor
 public class JdbcRoomRepository implements RoomRepository{
@@ -25,7 +27,7 @@ public class JdbcRoomRepository implements RoomRepository{
     @Override
     public Room save(Room room) {
         String sql = """
-                insert into rooms 
+                insert into rooms
                 (name,capacity,open_time,close_time,is_available,created_at,updated_at)
                 values (?,?,?,?,?,now(),now())
                 """;
@@ -56,7 +58,7 @@ public class JdbcRoomRepository implements RoomRepository{
         try {
             return Optional.ofNullable(jdbcTemplate.queryForObject(sql, roomRowMapper(), id));
         } catch (EmptyResultDataAccessException e) {
-            return null;
+            return Optional.empty();
         }
     }
 

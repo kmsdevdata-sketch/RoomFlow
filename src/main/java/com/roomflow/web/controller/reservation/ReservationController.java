@@ -49,9 +49,7 @@ public class ReservationController {
         if (loginUser == null) {
             return "redirect:/login";
         }
-        log.info("ReservationController createReservation join start");
         Long joinId = reservationService.join(reservationCreateDto, loginUser);
-        log.info("ReservationController createReservation join end");
         redirectAttributes.addAttribute("reservationId", joinId);
         return "redirect:/reservations/{reservationId}";
     }

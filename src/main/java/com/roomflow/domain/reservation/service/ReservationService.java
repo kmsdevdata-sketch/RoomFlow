@@ -4,6 +4,7 @@ import com.roomflow.domain.reservation.entity.Reservation;
 import com.roomflow.domain.reservation.entity.Status;
 import com.roomflow.domain.reservation.repository.MemoryReservationRepository;
 import com.roomflow.domain.user.entity.User;
+import com.roomflow.exception.NotFoundException;
 import com.roomflow.web.controller.reservation.dto.ReservationCreateDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,17 +25,15 @@ public class ReservationService {
 
 
     public Long join(ReservationCreateDto reservationCreateDto, User loginUser) {
-        log.info("ReservationService Join Start");
         Reservation reservation = reservationCreateDto.toEntity();
         reservation.setUserId(loginUser.getId());
         reservation.setStatus(Status.RESERVATION);
         reservation.setCreatedTime(LocalTime.now());
-        log.info("ReservationService Join End");
         return reservationRepository.save(reservation).getId();
     }
 
     public Reservation findReservationById(Long reservationId) {
-        return reservationRepository.findById(reservationId);
+        return reservationRepository.findById(reservationId).orElseThrow(() -> new NotFoundException("찾으시는 예약이 존재하지 않습니다 "));
     }
 
     public List<Reservation> findAll() {
@@ -61,6 +60,8 @@ public class ReservationService {
     }
 
     public void cancelReservation(Long reservationId) {
-        reservationRepository.findById(reservationId).cancel();
+        Reservation reservation = reservationRepository.findById(reservationId)
+                .orElseThrow(() -> new NotFoundException("찾으시는 예약이 존재하지 않습니다"));
+        reservation.cancel();
     }
 }
