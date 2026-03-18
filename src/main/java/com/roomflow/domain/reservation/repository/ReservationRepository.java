@@ -8,7 +8,7 @@ import java.util.List;
 public interface ReservationRepository {
     Reservation save(Reservation reservation);
 
-    Reservation findById(Long id);
+     Reservation findById(Long id);
 
     List<Reservation> findAll();
 

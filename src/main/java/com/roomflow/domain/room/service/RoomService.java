@@ -2,6 +2,7 @@ package com.roomflow.domain.room.service;
 
 import com.roomflow.domain.room.entity.Room;
 import com.roomflow.domain.room.repository.MemoryRoomRepository;
+import com.roomflow.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +19,8 @@ public class RoomService {
     }
 
     public Room findByRoomId(Long roomId) {
-        return roomRepository.findByRoomId(roomId);
+        return roomRepository.findByRoomId(roomId)
+                .orElseThrow(()-> new NotFoundException("방이 존재하지 않습니다"));
     }
 
 

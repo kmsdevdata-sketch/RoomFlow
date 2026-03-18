@@ -3,10 +3,7 @@ package com.roomflow.domain.room.repository;
 import com.roomflow.domain.room.entity.Room;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Repository
 public class MemoryRoomRepository implements RoomRepository{
@@ -19,8 +16,8 @@ public class MemoryRoomRepository implements RoomRepository{
         return room;
     }
 
-    public Room findByRoomId(Long id) {
-        return store.get(id);
+    public Optional<Room> findByRoomId(Long id) {
+        return Optional.ofNullable(store.get(id));
     }
 
     public List<Room> findAll() {

@@ -12,14 +12,13 @@ public class Room extends BaseEntity {
     private int capacity; // 이용가능 인원 (2~4명이라고 가정시 4??)
     private LocalTime openTime;
     private LocalTime closeTime;
-    private boolean isAvailable;
+    private boolean available;
 
-    public Room(Long id, String name, int capacity, LocalTime openTime, LocalTime closeTime, boolean isAvailable) {
-        this.id = id;
+    public Room(String name, int capacity, LocalTime openTime, LocalTime closeTime, boolean isAvailable) {
         this.name = name;
         this.capacity = capacity;
         this.openTime = openTime;
         this.closeTime = closeTime;
-        this.isAvailable = isAvailable;
+        this.available = isAvailable;
     }
 }

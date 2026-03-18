@@ -26,22 +26,22 @@ public class TestDataInit {
         userRepository.save(new User("abc1","abcd","kim",LocalDate.now(),"01012345678","email1.com"));
         userRepository.save(new User("abc2","efgh","lee",LocalDate.now(),"01023456789","email2.com"));
 
-        roomRepository.save(new Room(null,"스터디룸 A",4,
+        roomRepository.save(new Room("스터디룸 A",4,
                 LocalTime.of(9,0),
                 LocalTime.of(23,0),
                 true));
 
-        roomRepository.save(new Room(null,"스터디룸 B",6,
+        roomRepository.save(new Room("스터디룸 B",6,
                 LocalTime.of(9,0),
                 LocalTime.of(23,0),
                 true));
 
-        roomRepository.save(new Room(null,"회의실 C",8,
+        roomRepository.save(new Room("회의실 C",8,
                 LocalTime.of(10,0),
                 LocalTime.of(22,0),
                 true));
 
-        roomRepository.save(new Room(null,"프라이빗룸 D",2,
+        roomRepository.save(new Room("프라이빗룸 D",2,
                 LocalTime.of(9,0),
                 LocalTime.of(23,0),
                 true));
