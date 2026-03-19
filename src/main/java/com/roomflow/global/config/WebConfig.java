@@ -2,6 +2,7 @@ package com.roomflow.global.config;
 
 
 import com.roomflow.web.filter.LogFilter;
+import com.roomflow.web.filter.LoginCheckFilter;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterRegistration;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -16,6 +17,16 @@ public class WebConfig {
         FilterRegistrationBean<Filter> filterRegistrationBean = new FilterRegistrationBean<>();
         filterRegistrationBean.setFilter(new LogFilter());
         filterRegistrationBean.setOrder(1);
+        filterRegistrationBean.addUrlPatterns("/*");
+
+        return filterRegistrationBean;
+    }
+
+    @Bean
+    public FilterRegistrationBean loginCheckFilter() {
+        FilterRegistrationBean<Filter> filterRegistrationBean = new FilterRegistrationBean<>();
+        filterRegistrationBean.setFilter(new LoginCheckFilter());
+        filterRegistrationBean.setOrder(2);
         filterRegistrationBean.addUrlPatterns("/*");
 
         return filterRegistrationBean;

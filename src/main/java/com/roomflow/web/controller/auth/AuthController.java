@@ -12,10 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @Controller
@@ -50,6 +47,7 @@ public class AuthController {
     @PostMapping("/login")
     public String login(@Valid LoginForm loginForm,
                         BindingResult bindingResult,
+                        @RequestParam(defaultValue = "/") String redirectURL,
                         HttpServletRequest request) {
         if (bindingResult.hasErrors()) {
             return "auth/login";
@@ -75,7 +73,7 @@ public class AuthController {
         5.세션에 attribute(key,value)저장
         6.이후 요청에서 sessionId로 세션조회
          */
-        return "redirect:/";
+        return "redirect:" + redirectURL;
     }
 
     @PostMapping("/logout")
