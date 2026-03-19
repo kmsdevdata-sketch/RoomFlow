@@ -18,7 +18,7 @@ public class Reservation extends BaseEntity {
     private LocalTime endTime;
 
     private Status status;
-    private LocalTime createdTime;
+    private LocalDateTime createdTime;
 
     public Reservation(Long roomId,LocalDate date, LocalTime startTime, LocalTime endTime) {
         this.roomId = roomId;

@@ -12,6 +12,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,7 +42,7 @@ public class JdbcReservationRepository implements ReservationRepository{
             ps.setTime(4, Time.valueOf(reservation.getStartTime()));
             ps.setTime(5, Time.valueOf(reservation.getEndTime()));
             ps.setString(6, reservation.getStatus().name());
-            ps.setTime(7, Time.valueOf(reservation.getCreatedTime()));
+            ps.setTimestamp(7, Timestamp.valueOf(reservation.getCreatedTime()));
             return ps;
         }, keyHolder);
 
@@ -77,10 +78,6 @@ public class JdbcReservationRepository implements ReservationRepository{
 
     @Override
     public List<Reservation> findReservationListByUser(Long userId) {
-        //store.values().stream()
-        //      .filter(r -> userId.equals(r.getUserId())) // NPE발생하지 않도록 하는게 좋은습관
-        //    .toList();
-
         String sql = """
                 select *
                 from reservations
@@ -88,6 +85,26 @@ public class JdbcReservationRepository implements ReservationRepository{
                 """;
 
         return jdbcTemplate.query(sql,reservationRowMapper(),userId);
+    }
+
+    @Override
+    public List<Reservation> findReservationsByRoomAndDate(Long roomId, LocalDate date) {
+        String sql = """
+                select *
+                from reservations
+                where room_id = ?
+                    and date = ?
+                    and status = ?
+                order by start_time
+                """;
+
+        return jdbcTemplate.query(
+                sql,
+                reservationRowMapper(),
+                roomId,
+                Date.valueOf(date),
+                Status.RESERVATION.name()
+        );
     }
 
     public RowMapper<Reservation> reservationRowMapper() {
@@ -103,9 +120,9 @@ public class JdbcReservationRepository implements ReservationRepository{
 
             reservation.setStatus(Status.valueOf(rs.getString("status")));
 
-            Time createdTime = rs.getTime("created_time");
+            Timestamp createdTime = rs.getTimestamp("created_time");
             if (createdTime != null) {
-                reservation.setCreatedTime(createdTime.toLocalTime());
+                reservation.setCreatedTime(createdTime.toLocalDateTime());
             }
 
             Timestamp createdAt = rs.getTimestamp("created_at");

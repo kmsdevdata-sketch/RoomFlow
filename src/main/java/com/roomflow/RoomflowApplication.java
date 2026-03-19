@@ -7,42 +7,22 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class RoomflowApplication {
 
     /* TODO
-        ====================================================
-        [1] Architecture / Structure
-        --------------------------------
-        - [x] UserCreateDto 도입
-        - [x] Reservation 입력 DTO 도입 (Form 객체 분리)
-        - [x] Domain별 Service Layer 구현
-        - [x] Controller → Service → Repository 구조 정리
-        [2] Authentication / Security
-        --------------------------------
-        - [ ] Session 기반 로그인 권한 검증 (Interceptor 적용)
-        - [ ] 비밀번호 암호화 (BCrypt)
-        [3] Reservation Domain
-        --------------------------------
-        - [x] 예약 시간 유효성 검증 (startTime < endTime)
-        - [x] 예약 생성 로직 Service로 이동
-        - [x] 예약 중복 검증 로직 구현
-        - [x] 예약 목록 조회 기능
-        - [x] 예약 취소 기능
-        - [x] 예약 취소 가능 시간 제한 로직
-        [4] Concurrency / Validation
-        --------------------------------
-        - [x] 예약 목록 사용자별 구분
-        - [ ] 동일 시간대 예약 동시성 문제 검증
-        - [ ] 예약 시간 유효성 검증
-        [5] Payment / Extension
-        --------------------------------
-        - [ ] 포인트 기반 결제 시스템
-        - [ ] 결제 성공 후 예약 확정 처리
-        [6] Database
-        ---------------------------------
-        - [x] MySQL 로컬 환경 구성 및 Workbench 연결
-        - [x] roomflow 데이터베이스 생성
-        - [x] 핵심 테이블 스키마 설계 (users,room,reservations)
-        - [ ] Spring Boot DataSource 설정
-        - [ ] JDBC 기반 Repository 구조 도입
-        ====================================================
+        - [x] 도메인 기준 패키지 구조로 정리
+        - [x] Controller -> Service -> Repository 흐름 분리
+        - [x] DTO 기반 회원가입 / 예약 생성 처리
+        - [x] HttpSession 기반 로그인 / 로그아웃
+        - [x] 사용자별 예약 목록 조회
+        - [x] 예약 취소 및 30분 전 제한 로직
+        - [x] MySQL + JDBC Repository 전환
+        - [x] JDBC 기준 테스트 데이터 초기화 정리
+        - [x] 예약 가능 시간 조회를 DB 쿼리 중심으로 개선
+
+        - [ ] 서비스 / 컨트롤러 전반 Optional 처리 일관성 정리
+        - [ ] 로그인 검증용 인터셉터 적용
+        - [ ] 비밀번호 암호화 적용
+        - [ ] 예약 변경 기능 추가
+        - [ ] 중복 예약 및 동시성 처리 보강
+        - [ ] 관리자용 방 관리 기능 추가
      */
 
 	public static void main(String[] args) {

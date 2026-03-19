@@ -11,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -28,7 +28,7 @@ public class ReservationService {
         Reservation reservation = reservationCreateDto.toEntity();
         reservation.setUserId(loginUser.getId());
         reservation.setStatus(Status.RESERVATION);
-        reservation.setCreatedTime(LocalTime.now());
+        reservation.setCreatedTime(LocalDateTime.now());
         return reservationRepository.save(reservation).getId();
     }
 
@@ -44,19 +44,18 @@ public class ReservationService {
         return reservationRepository.findReservationListByUser(id);
     }
 
-    public List<Integer> findReservedTimesByRoomAndDate(Long roomId, LocalDate date) {
-        return reservationRepository.findAll().stream()
-                .filter(reservation -> reservation.getRoomId().equals(roomId)
-                                                    && reservation.getDate().equals(date)
-                                                    && reservation.getStatus().equals(Status.RESERVATION)) // 선택한방 & 선택한 날짜와 동일한
+    public List<Integer> getReservedTimeSlots(Long roomId, LocalDate date) {
+        return reservationRepository
+                .findReservationsByRoomAndDate(roomId, date)
+                .stream()
                 .flatMap(reservation -> {
                     int start = reservation.getStartTime().getHour();
                     int end = reservation.getEndTime().getHour();
-                    return IntStream.range(start, end).boxed(); // 예약 구간을 시간단위로 분해 ex.10~13 => 10,11,12
+                    return IntStream.range(start, end).boxed();
                 })
                 .distinct()
                 .sorted()
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public void cancelReservation(Long reservationId) {

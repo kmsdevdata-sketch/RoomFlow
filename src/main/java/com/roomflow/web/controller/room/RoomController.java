@@ -53,7 +53,7 @@ public class RoomController {
 
 
         Room findRoom = roomService.findByRoomId(roomId);
-        List<Integer> reservedTimes = reservationService.findReservedTimesByRoomAndDate(roomId, date);
+        List<Integer> reservedTimes = reservationService.getReservedTimeSlots(roomId, date);
 
         ReservationCreateDto dto = new ReservationCreateDto();
         dto.setDate(date);
