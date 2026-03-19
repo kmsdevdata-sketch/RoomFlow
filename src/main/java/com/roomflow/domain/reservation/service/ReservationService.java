@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Slf4j
@@ -61,6 +60,9 @@ public class ReservationService {
     public void cancelReservation(Long reservationId) {
         Reservation reservation = reservationRepository.findById(reservationId)
                 .orElseThrow(() -> new NotFoundException("찾으시는 예약이 존재하지 않습니다"));
+
         reservation.cancel();
+
+        reservationRepository.updateStatus(reservation);
     }
 }

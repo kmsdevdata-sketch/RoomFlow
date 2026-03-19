@@ -107,6 +107,16 @@ public class JdbcReservationRepository implements ReservationRepository{
         );
     }
 
+    @Override
+    public void updateStatus(Reservation reservation) {
+        String sql = """
+                update reservations
+                set status = ? , updated_at = now()
+                where id =?
+                """;
+        jdbcTemplate.update(sql, reservation.getStatus().name(),reservation.getId());
+    }
+
     public RowMapper<Reservation> reservationRowMapper() {
         return ((rs, rowNum) -> {
             Reservation reservation = new Reservation(

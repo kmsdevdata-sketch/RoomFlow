@@ -44,4 +44,9 @@ public class MemoryReservationRepository implements ReservationRepository{
                 .sorted(Comparator.comparing(Reservation::getStartTime))
                 .toList();
     }
+
+    @Override
+    public void updateStatus(Reservation reservation) {
+        store.put(reservation.getId(), reservation);
+    }
 }
