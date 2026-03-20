@@ -45,10 +45,7 @@ public class ReservationController {
             return "room/reserve";
         }
 
-        // 권한인증 구현후 삭제
-        if (loginUser == null) {
-            return "redirect:/login";
-        }
+
         Long joinId = reservationService.join(reservationCreateDto, loginUser);
         redirectAttributes.addAttribute("reservationId", joinId);
         return "redirect:/reservations/{reservationId}";
