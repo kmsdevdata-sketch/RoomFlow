@@ -1,6 +1,6 @@
 package com.roomflow.web.controller.home;
 
-import com.roomflow.web.argumentresolver.Login;
+import com.roomflow.global.argumentresolver.Login;
 import com.roomflow.domain.user.entity.User;
 import com.roomflow.domain.user.repository.MemoryUserRepository;
 import com.roomflow.web.session.SessionMng;

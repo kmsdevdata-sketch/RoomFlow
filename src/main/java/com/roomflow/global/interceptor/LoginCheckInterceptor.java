@@ -1,4 +1,4 @@
-package com.roomflow.web.interceptor;
+package com.roomflow.global.interceptor;
 
 import com.roomflow.web.session.SessionConst;
 import jakarta.servlet.http.HttpServletRequest;

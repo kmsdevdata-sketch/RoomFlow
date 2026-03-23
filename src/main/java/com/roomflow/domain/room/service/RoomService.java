@@ -2,7 +2,7 @@ package com.roomflow.domain.room.service;
 
 import com.roomflow.domain.room.entity.Room;
 import com.roomflow.domain.room.repository.RoomRepository;
-import com.roomflow.exception.NotFoundException;
+import com.roomflow.global.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

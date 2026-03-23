@@ -1,4 +1,4 @@
-package com.roomflow.web.filter;
+package com.roomflow.global.filter;
 
 import com.roomflow.web.session.SessionConst;
 import jakarta.servlet.*;

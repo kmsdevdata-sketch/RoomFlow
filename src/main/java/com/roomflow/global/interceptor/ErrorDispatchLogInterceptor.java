@@ -1,4 +1,4 @@
-package com.roomflow.exception.interceptor;
+package com.roomflow.global.interceptor;
 
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -11,7 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.UUID;
 
 @Slf4j
-public class LogInterceptor implements HandlerInterceptor {
+public class ErrorDispatchLogInterceptor implements HandlerInterceptor {
 
     public static final String LOG_ID = "logId";
 

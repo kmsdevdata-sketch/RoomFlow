@@ -1,4 +1,4 @@
-package com.roomflow.exception;
+package com.roomflow.global.exception;
 
 public class NotFoundException extends RuntimeException {
 

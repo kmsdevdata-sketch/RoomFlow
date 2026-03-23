@@ -1,4 +1,4 @@
-package com.roomflow.exception.Filter;
+package com.roomflow.global.filter;
 
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.UUID;
 
 @Slf4j
-public class LogFilter implements Filter {
+public class ErrorDispatchLogFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         log.info("log filter init");

@@ -1,9 +1,9 @@
 package com.roomflow.global.config;
 
 
-import com.roomflow.web.argumentresolver.LoginUserArgumentResolver;
-import com.roomflow.web.interceptor.LogInterceptor;
-import com.roomflow.web.interceptor.LoginCheckInterceptor;
+import com.roomflow.global.argumentresolver.LoginUserArgumentResolver;
+import com.roomflow.global.interceptor.LoginCheckInterceptor;
+import com.roomflow.global.interceptor.RequestLogInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -20,7 +20,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new LogInterceptor())
+        registry.addInterceptor(new RequestLogInterceptor())
                 .order(1)
                 .addPathPatterns("/**")
                 .excludePathPatterns(

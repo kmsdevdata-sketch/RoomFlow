@@ -1,4 +1,4 @@
-package com.roomflow.web.argumentresolver;
+package com.roomflow.global.argumentresolver;
 
 import com.roomflow.domain.user.entity.User;
 import com.roomflow.web.session.SessionConst;

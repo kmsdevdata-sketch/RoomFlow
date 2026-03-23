@@ -1,4 +1,4 @@
-package com.roomflow.exception.servlet;
+package com.roomflow.web.controller.error;
 
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;

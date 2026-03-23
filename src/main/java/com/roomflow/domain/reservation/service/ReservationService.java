@@ -4,7 +4,7 @@ import com.roomflow.domain.reservation.entity.Reservation;
 import com.roomflow.domain.reservation.entity.Status;
 import com.roomflow.domain.reservation.repository.ReservationRepository;
 import com.roomflow.domain.user.entity.User;
-import com.roomflow.exception.NotFoundException;
+import com.roomflow.global.exception.NotFoundException;
 import com.roomflow.web.controller.reservation.dto.ReservationCreateDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

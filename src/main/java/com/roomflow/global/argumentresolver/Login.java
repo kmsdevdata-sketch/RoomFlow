@@ -1,4 +1,4 @@
-package com.roomflow.web.argumentresolver;
+package com.roomflow.global.argumentresolver;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
