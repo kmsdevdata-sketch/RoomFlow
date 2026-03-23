@@ -16,9 +16,9 @@ public class RoomflowApplication {
         - [x] MySQL + JDBC Repository 전환
         - [x] JDBC 기준 테스트 데이터 초기화 정리
         - [x] 예약 가능 시간 조회를 DB 쿼리 중심으로 개선
+        - [x] 로그인 검증용 인터셉터 적용
+        - [x] 서비스 / 컨트롤러 전반 Optional 처리 일관성 정리
 
-        - [ ] 서비스 / 컨트롤러 전반 Optional 처리 일관성 정리
-        - [ ] 로그인 검증용 인터셉터 적용
         - [ ] 비밀번호 암호화 적용
         - [ ] 예약 변경 기능 추가
         - [ ] 중복 예약 및 동시성 처리 보강

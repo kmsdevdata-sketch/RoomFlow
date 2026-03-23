@@ -2,14 +2,8 @@ package com.roomflow.global.config;
 
 
 import com.roomflow.web.argumentresolver.LoginUserArgumentResolver;
-import com.roomflow.web.filter.LogFilter;
-import com.roomflow.web.filter.LoginCheckFilter;
 import com.roomflow.web.interceptor.LogInterceptor;
 import com.roomflow.web.interceptor.LoginCheckInterceptor;
-import jakarta.servlet.Filter;
-import jakarta.servlet.FilterRegistration;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -29,11 +23,33 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(new LogInterceptor())
                 .order(1)
                 .addPathPatterns("/**")
-                .excludePathPatterns("/css/**", "/*.ico", "/error");
+                .excludePathPatterns(
+                        "/css/**",
+                        "/images/**",
+                        "/js/**",
+                        "/favicon.ico"
+                );
+
         registry.addInterceptor(new LoginCheckInterceptor())
                 .order(2)
                 .addPathPatterns("/**")
-                .excludePathPatterns("/", "/auth/login", "/auth/signup", "/auth/logout", "/css/**", "/*.ico", "/error");
+                .excludePathPatterns(
+                        "/",
+                        "/auth/login",
+                        "/auth/signup",
+                        "/auth/logout",
+                        "/css/**",
+                        "/images/**",
+                        "/js/**",
+                        "/favicon.ico",
+                        "/error",
+                        "/error/**",
+                        "/error-page/**",
+                        "/error-404",
+                        "/error-500",
+                        "/error-ex"
+                );
+
     }
 //
 //    @Bean
