@@ -3,7 +3,6 @@ package com.roomflow.global.config;
 
 import com.roomflow.global.argumentresolver.LoginUserArgumentResolver;
 import com.roomflow.global.interceptor.LoginCheckInterceptor;
-import com.roomflow.global.interceptor.RequestLogInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -20,18 +19,18 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new RequestLogInterceptor())
-                .order(1)
-                .addPathPatterns("/**")
-                .excludePathPatterns(
-                        "/css/**",
-                        "/images/**",
-                        "/js/**",
-                        "/favicon.ico"
-                );
+//        registry.addInterceptor(new RequestLogInterceptor())
+//                .order(1)
+//                .addPathPatterns("/**")
+//                .excludePathPatterns(
+//                        "/css/**",
+//                        "/images/**",
+//                        "/js/**",
+//                        "/favicon.ico"
+//                );
 
         registry.addInterceptor(new LoginCheckInterceptor())
-                .order(2)
+                .order(1)
                 .addPathPatterns("/**")
                 .excludePathPatterns(
                         "/",
@@ -47,7 +46,8 @@ public class WebConfig implements WebMvcConfigurer {
                         "/error-page/**",
                         "/error-404",
                         "/error-500",
-                        "/error-ex"
+                        "/error-ex",
+                        "/api/**"
                 );
 
     }
