@@ -36,6 +36,7 @@ public class AuthController {
             return "auth/signup";
         }
         userService.join(user);
+
         return "redirect:/";
     }
 

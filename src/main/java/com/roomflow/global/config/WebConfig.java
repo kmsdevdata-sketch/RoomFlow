@@ -1,10 +1,13 @@
 package com.roomflow.global.config;
 
 
+import com.roomflow.exception.resolver.MyHandlerExceptionResolver;
+import com.roomflow.exception.resolver.UserHandlerExceptionResolver;
 import com.roomflow.global.argumentresolver.LoginUserArgumentResolver;
 import com.roomflow.global.interceptor.LoginCheckInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -15,6 +18,12 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
         resolvers.add(new LoginUserArgumentResolver());
+    }
+
+    @Override
+    public void extendHandlerExceptionResolvers(List<HandlerExceptionResolver> resolvers) {
+        resolvers.add(new MyHandlerExceptionResolver());
+        resolvers.add(new UserHandlerExceptionResolver());
     }
 
     @Override
@@ -47,7 +56,8 @@ public class WebConfig implements WebMvcConfigurer {
                         "/error-404",
                         "/error-500",
                         "/error-ex",
-                        "/api/**"
+                        "/api/**",
+                        "/api2/**"
                 );
 
     }

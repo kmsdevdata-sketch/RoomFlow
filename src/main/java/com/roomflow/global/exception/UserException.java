@@ -1,4 +1,4 @@
-package com.roomflow.exception.exception;
+package com.roomflow.global.exception;
 
 public class UserException extends RuntimeException {
     public UserException() {

@@ -10,5 +10,6 @@ spring:
 
 server:
   error:
+    include-message: always
     whitelabel:
       enabled: false
